@@ -1,0 +1,9 @@
+name: hiantsys
+version: '1.0'
+main: org.insilicon.hiantsys.hiantsys
+api-version: '1.20'
+commands:
+  hiantsys:
+    description: hiantsys
+    usage: /hiantsys [argument]
+    aliases: [hs]
