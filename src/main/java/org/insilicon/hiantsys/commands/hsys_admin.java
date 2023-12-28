@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -55,6 +56,8 @@ public class hsys_admin implements CommandExecutor, TabCompleter, Listener {
                 ItemStack grypane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
                 //Get Green Stained Glass Pane item
                 ItemStack givebtn = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+                // Purple Stained Glass Pane aka Regeneration Settings
+                ItemStack regenbtn = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE);
 
 //Set display name of items
                 ItemMeta grypanemeta = grypane.getItemMeta();
@@ -63,15 +66,20 @@ public class hsys_admin implements CommandExecutor, TabCompleter, Listener {
                 ItemMeta givebtnmeta = givebtn.getItemMeta();
                 givebtnmeta.setDisplayName(ChatColor.GREEN + "Give");
 
+                ItemMeta regenbtnmeta = regenbtn.getItemMeta();
+                regenbtnmeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Regeneration Settings");
+
+
 //Set item meta
                 grypane.setItemMeta(grypanemeta);
                 givebtn.setItemMeta(givebtnmeta);
+                regenbtn.setItemMeta(regenbtnmeta);
 
 
 //Add items to inventory
                 inv.setItem(0, grypane);
                 inv.setItem(1, grypane);
-                inv.setItem(2, grypane);
+                inv.setItem(2, regenbtn);
                 inv.setItem(3, grypane);
                 inv.setItem(4, givebtn);
                 inv.setItem(5, grypane);
@@ -86,6 +94,9 @@ public class hsys_admin implements CommandExecutor, TabCompleter, Listener {
 
 
                 return true;
+            default:
+                sender.sendMessage("Invalid argument");
+
         }
 
 
@@ -157,6 +168,47 @@ public class hsys_admin implements CommandExecutor, TabCompleter, Listener {
 
             }
 
+            if (itemName.equals(ChatColor.LIGHT_PURPLE + "Regeneration Settings")) {
+                //close inventory
+                event.getWhoClicked().closeInventory();
+
+                //Open Regeneration Settings inventory
+                CustomGUI regengui = new CustomGUI(9, ChatColor.DARK_PURPLE + "HiantSys" + ChatColor.LIGHT_PURPLE + " Regeneration Settings");
+                Inventory regeninv = regengui.getInventory();
+
+                ItemStack enabled = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
+                ItemStack disabled = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+                ItemStack reload = new ItemStack(Material.COMPASS);
+
+                //Set up displays
+                ItemMeta enabledmeta = enabled.getItemMeta();
+                enabledmeta.setDisplayName(ChatColor.GREEN + "Enabled");
+                enabled.setItemMeta(enabledmeta);
+
+                ItemMeta disabledmeta = disabled.getItemMeta();
+                disabledmeta.setDisplayName(ChatColor.RED + "Disabled");
+                disabled.setItemMeta(disabledmeta);
+
+                ItemMeta reloadmeta = reload.getItemMeta();
+                reloadmeta.setDisplayName(ChatColor.DARK_PURPLE + "Reload");
+                reload.setItemMeta(reloadmeta);
+
+                FileConfiguration config = Hiantsys.getPlugin(Hiantsys.class).getConfig();
+                if (config.getBoolean("regeneration.enabled")) {
+                    regeninv.setItem(1, enabled);
+                } else {
+                    regeninv.setItem(1, disabled);
+                }
+
+                regeninv.setItem(8, reload);
+
+                //Show inventory
+                ((Player) event.getWhoClicked()).openInventory(regeninv);
+
+
+
+            }
+
             event.setCancelled(true);
         }
 
@@ -208,6 +260,56 @@ public class hsys_admin implements CommandExecutor, TabCompleter, Listener {
 
             event.setCancelled(true);
         }
+
+
+        if (event.getView().getTitle().equals(ChatColor.DARK_PURPLE + "HiantSys" + ChatColor.LIGHT_PURPLE + " Regeneration Settings")) {
+
+            String itemName = event.getCurrentItem().getItemMeta().getDisplayName();
+            ItemStack enabled = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
+            ItemStack disabled = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+
+            //Set up displays
+            ItemMeta enabledmeta = enabled.getItemMeta();
+            enabledmeta.setDisplayName(ChatColor.GREEN + "Enabled");
+            enabled.setItemMeta(enabledmeta);
+
+            ItemMeta disabledmeta = disabled.getItemMeta();
+            disabledmeta.setDisplayName(ChatColor.RED + "Disabled");
+            disabled.setItemMeta(disabledmeta);
+
+            if (itemName.equals(ChatColor.GREEN + "Enabled")) {
+
+                //On the config set regeneration.enabled to false and save the config
+                FileConfiguration config = Hiantsys.getPlugin(Hiantsys.class).getConfig();
+                config.set("regeneration.enabled", false);
+                event.getView().setItem(1, disabled);
+
+
+            }
+            if (itemName.equals(ChatColor.RED + "Disabled")) {
+
+                FileConfiguration config = Hiantsys.getPlugin(Hiantsys.class).getConfig();
+                config.set("regeneration.enabled", true);
+                event.getView().setItem(1, enabled);
+
+            }
+
+            if (itemName.equals(ChatColor.DARK_PURPLE + "Reload")) {
+                event.getView().close();
+                //Get user
+                Player player = (Player) event.getWhoClicked();
+
+                player.sendMessage(ChatColor.DARK_PURPLE + "Reloading...");
+                Hiantsys.getPlugin(Hiantsys.class).reloadConfig();
+                player.sendMessage(ChatColor.GREEN + "Reloaded!");
+            }
+
+            event.setCancelled(true);
+
+        }
+
+
+
     }
 
 
