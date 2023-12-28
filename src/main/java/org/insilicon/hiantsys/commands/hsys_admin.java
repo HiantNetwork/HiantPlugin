@@ -14,12 +14,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.insilicon.hiantsys.CustomClasses.CustomGUI;
-import org.insilicon.hiantsys.CustomClasses.ElementalItem;
-import org.insilicon.hiantsys.hiantsys;
-import org.insilicon.hiantsys.systems.ElementalTools;
+import org.insilicon.hiantsys.Hiantsys;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -174,9 +171,9 @@ public class hsys_admin implements CommandExecutor, TabCompleter, Listener {
                 FireForgedDiamondSwordmeta.setDisplayName(ChatColor.RED + "FireForged Diamond Sword");
                 FireForgedDiamondSwordmeta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
 
-                System.out.println(hiantsys.getPlugin(hiantsys.class).key);
+                System.out.println(Hiantsys.getPlugin(Hiantsys.class).key);
 
-                FireForgedDiamondSwordmeta.getPersistentDataContainer().set(hiantsys.getPlugin(hiantsys.class).key, PersistentDataType.STRING, "Fire");
+                FireForgedDiamondSwordmeta.getPersistentDataContainer().set(Hiantsys.getPlugin(Hiantsys.class).key, PersistentDataType.STRING, "Fire");
 
 
 
@@ -197,9 +194,9 @@ public class hsys_admin implements CommandExecutor, TabCompleter, Listener {
                 FireBowmeta.setDisplayName(ChatColor.RED + "Fire Bow");
                 FireBowmeta.addEnchant(Enchantment.ARROW_FIRE, 1, true);
 
-                System.out.println(hiantsys.getPlugin(hiantsys.class).key);
+                System.out.println(Hiantsys.getPlugin(Hiantsys.class).key);
 
-                FireBowmeta.getPersistentDataContainer().set(hiantsys.getPlugin(hiantsys.class).key, PersistentDataType.STRING, "Fire");
+                FireBowmeta.getPersistentDataContainer().set(Hiantsys.getPlugin(Hiantsys.class).key, PersistentDataType.STRING, "Fire");
 
                 FireBow.setItemMeta(FireBowmeta);
 
