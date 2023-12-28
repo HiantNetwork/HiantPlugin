@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'org.insilicon'
@@ -15,10 +16,15 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        url = 'https://repo.skriptlang.org/releases'
+    }
 }
 
 dependencies {
     compileOnly "io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT"
+
+    implementation 'com.github.SkriptLang:Skript:2.7.3'
 }
 
 def targetJavaVersion = 17
@@ -35,6 +41,14 @@ tasks.withType(JavaCompile).configureEach {
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release = targetJavaVersion
     }
+}
+
+build {
+    dependsOn(shadowJar)
+}
+
+shadowJar {
+    archiveClassifier = null
 }
 
 processResources {
