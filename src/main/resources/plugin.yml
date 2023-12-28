@@ -7,3 +7,4 @@ commands:
     description: hiantsys
     usage: /hiantsys [argument]
     aliases: [hs]
+    permission: hiantsys.admin

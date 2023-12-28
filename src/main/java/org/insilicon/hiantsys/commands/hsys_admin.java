@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,7 +14,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.insilicon.hiantsys.CustomClasses.CustomGUI;
+import org.insilicon.hiantsys.CustomClasses.ElementalItem;
+import org.insilicon.hiantsys.hiantsys;
+import org.insilicon.hiantsys.systems.ElementalTools;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,6 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class hsys_admin implements CommandExecutor, TabCompleter, Listener {
+
+
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
@@ -110,7 +119,99 @@ public class hsys_admin implements CommandExecutor, TabCompleter, Listener {
             //Get name of item clicked
             String itemName = event.getCurrentItem().getItemMeta().getDisplayName();
 
+            if (itemName.equals(ChatColor.GREEN + "Give")) {
+
+                //Close inventory
+                event.getWhoClicked().closeInventory();
+
+                //Open item give inventory
+                CustomGUI givegui = new CustomGUI(9, ChatColor.GREEN + "HiantSys" + ChatColor.RED + " Give Panel");
+                Inventory giveinv = givegui.getInventory();
+
+                //Create ItemStacks
+                ItemStack FireForgedDiamondSword = new ItemStack(Material.DIAMOND_SWORD);
+
+
+                //Set up displays
+
+                //FireForgedDiamondSword
+
+                ItemMeta FireForgedDiamondSwordmeta = FireForgedDiamondSword.getItemMeta();
+                FireForgedDiamondSwordmeta.setDisplayName(ChatColor.RED + "FireForged Diamond Sword");
+                FireForgedDiamondSwordmeta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
+                FireForgedDiamondSword.setItemMeta(FireForgedDiamondSwordmeta);
+
+                //Add items to inventory
+                giveinv.setItem(0, FireForgedDiamondSword);
+
+
+                //Fire bow
+                ItemStack FireBow = new ItemStack(Material.BOW);
+                ItemMeta FireBowmeta = FireBow.getItemMeta();
+                FireBowmeta.setDisplayName(ChatColor.RED + "Fire Bow");
+                FireBowmeta.addEnchant(Enchantment.ARROW_FIRE, 1, true);
+                FireBow.setItemMeta(FireBowmeta);
+
+                giveinv.setItem(1, FireBow);
+
+                //Open inventory
+                ((Player) event.getWhoClicked()).openInventory(giveinv);
+
+
+            }
+
+            event.setCancelled(true);
+        }
+
+        if (event.getView().getTitle().equals(ChatColor.GREEN + "HiantSys" + ChatColor.RED + " Give Panel")) {
+            //Get name of item clicked
+            String itemName = event.getCurrentItem().getItemMeta().getDisplayName();
+
+            if (itemName.equals(ChatColor.RED + "FireForged Diamond Sword")) {
+
+                ItemStack FireForgedDiamondSword = new ItemStack(Material.DIAMOND_SWORD);
+                ItemMeta FireForgedDiamondSwordmeta = FireForgedDiamondSword.getItemMeta();
+                FireForgedDiamondSwordmeta.setDisplayName(ChatColor.RED + "FireForged Diamond Sword");
+                FireForgedDiamondSwordmeta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
+
+                System.out.println(hiantsys.getPlugin(hiantsys.class).key);
+
+                FireForgedDiamondSwordmeta.getPersistentDataContainer().set(hiantsys.getPlugin(hiantsys.class).key, PersistentDataType.STRING, "Fire");
+
+
+
+                FireForgedDiamondSword.setItemMeta(FireForgedDiamondSwordmeta);
+
+                FireForgedDiamondSword.setAmount(1);
+
+                event.getWhoClicked().getInventory().addItem(FireForgedDiamondSword);
+
+
+
+            }
+
+            if (itemName.equals(ChatColor.RED + "Fire Bow")) {
+
+                ItemStack FireBow = new ItemStack(Material.BOW);
+                ItemMeta FireBowmeta = FireBow.getItemMeta();
+                FireBowmeta.setDisplayName(ChatColor.RED + "Fire Bow");
+                FireBowmeta.addEnchant(Enchantment.ARROW_FIRE, 1, true);
+
+                System.out.println(hiantsys.getPlugin(hiantsys.class).key);
+
+                FireBowmeta.getPersistentDataContainer().set(hiantsys.getPlugin(hiantsys.class).key, PersistentDataType.STRING, "Fire");
+
+                FireBow.setItemMeta(FireBowmeta);
+
+                FireBow.setAmount(1);
+
+                event.getWhoClicked().getInventory().addItem(FireBow);
+
+            }
+
             event.setCancelled(true);
         }
     }
+
+
 }
