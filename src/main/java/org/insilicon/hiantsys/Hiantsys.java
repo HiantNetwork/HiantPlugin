@@ -5,10 +5,9 @@ import com.sk89q.worldedit.world.World;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.codehaus.plexus.util.FileUtils;
-import org.insilicon.hiantsys.CustomClasses.configClasses.RegenConfigs.RegenConfigRoot;
+import org.insilicon.hiantsys.systems.Regeneration;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,7 +57,7 @@ public final class Hiantsys extends JavaPlugin {
         //If enabled
         if (config.getBoolean("regeneration.enabled")) {
             System.out.println("Regeneration is enabled");
-            getServer().getPluginManager().registerEvents(new org.insilicon.hiantsys.systems.regeneration(), this);
+            getServer().getPluginManager().registerEvents(new Regeneration(), this);
         } else {
             System.out.println(" Regeneration is disabled");
         }
