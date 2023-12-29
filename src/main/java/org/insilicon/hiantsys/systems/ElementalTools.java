@@ -14,7 +14,7 @@ import org.bukkit.util.Vector;
 import org.insilicon.hiantsys.Hiantsys;
 public class ElementalTools implements Listener {
 
-    public NamespacedKey key = Hiantsys.getPlugin(Hiantsys.class).key;
+    public NamespacedKey key = Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey;
 
     public ElementalTools() {
 
@@ -37,13 +37,13 @@ public class ElementalTools implements Listener {
         ItemStack item = attacker.getInventory().getItemInMainHand();
         System.out.println(item);
 
-        System.out.println(Hiantsys.getPlugin(Hiantsys.class).key);
+        System.out.println(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey);
 
-        if (item.getItemMeta().getPersistentDataContainer().has(Hiantsys.getPlugin(Hiantsys.class).key, org.bukkit.persistence.PersistentDataType.STRING)) {
+        if (item.getItemMeta().getPersistentDataContainer().has(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey, org.bukkit.persistence.PersistentDataType.STRING)) {
             System.out.println("Player killed with ElementalItem");
 
             //Get the value of the ElementalItem
-            String ElementalValue = item.getItemMeta().getPersistentDataContainer().get(Hiantsys.getPlugin(Hiantsys.class).key, org.bukkit.persistence.PersistentDataType.STRING);
+            String ElementalValue = item.getItemMeta().getPersistentDataContainer().get(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey, org.bukkit.persistence.PersistentDataType.STRING);
 
 
             if (ElementalValue.equals("Fire")) {
@@ -90,16 +90,16 @@ public class ElementalTools implements Listener {
         ItemStack item = attacker.getInventory().getItemInMainHand();
         System.out.println(item);
 
-        System.out.println(Hiantsys.getPlugin(Hiantsys.class).key);
+        System.out.println(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey);
 
 
 
         //Check if the item has the ElementalItem key
-        if (item.getItemMeta().getPersistentDataContainer().has(Hiantsys.getPlugin(Hiantsys.class).key, org.bukkit.persistence.PersistentDataType.STRING)) {
+        if (item.getItemMeta().getPersistentDataContainer().has(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey, org.bukkit.persistence.PersistentDataType.STRING)) {
             System.out.println("Player killed with ElementalItem");
 
             //Get the value of the ElementalItem
-            String ElementalValue = item.getItemMeta().getPersistentDataContainer().get(Hiantsys.getPlugin(Hiantsys.class).key, org.bukkit.persistence.PersistentDataType.STRING);
+            String ElementalValue = item.getItemMeta().getPersistentDataContainer().get(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey, org.bukkit.persistence.PersistentDataType.STRING);
 
 
             if (ElementalValue.equals("Fire")) {
