@@ -30,7 +30,7 @@ dependencies {
 
     implementation 'com.github.CyberedCake.CyberAPI:spigot:154'
     implementation 'com.github.CyberedCake.CyberAPI:common:154'
-    implementation 'com.github.SkriptLang:Skript:2.7.3'
+    compileOnly 'com.github.SkriptLang:Skript:2.7.3'
     //https://maven.enginehub.org/repo/com/sk89q/worldedit/worldedit-bukkit/7.3.0-SNAPSHOT/
     //compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT'
 
