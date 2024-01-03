@@ -1,7 +1,6 @@
 package org.insilicon.hiantsys.Utils;
 
 import de.myzelyam.api.vanish.VanishAPI;
-import net.cybercake.cyberapi.common.basic.Time;
 import net.cybercake.cyberapi.spigot.CyberAPI;
 import net.cybercake.cyberapi.spigot.chat.Log;
 import net.cybercake.cyberapi.spigot.chat.UChat;
@@ -9,7 +8,6 @@ import net.cybercake.cyberapi.spigot.player.CyberPlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import org.apache.commons.lang3.RegExUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,14 +23,18 @@ import java.util.stream.Collectors;
 public class HiantUtils {
 
     public static String getDisplayNameIfExists(CommandSender sender) {
-        return getDisplayNameIfExists(sender, true);
+        return getDisplayNameIfExists(sender, true, false);
     }
 
     public static String getDisplayNameIfExists(CommandSender sender, boolean useDisplay) {
+        return getDisplayNameIfExists(sender, useDisplay, false);
+    }
+
+    public static String getDisplayNameIfExists(CommandSender sender, boolean useDisplay, boolean forceSetColor) {
         if (!(sender instanceof Player player)) return sender.getName();
         if (!useDisplay) return player.getName();
         try {
-            return CyberPlayer.from(player).getLuckPermsData().getDisplayName();
+            return forceSetColor ? "<color>" + getPrefixIfExists(sender) + "</color>" + player.getName() : CyberPlayer.from(player).getLuckPermsData().getDisplayName();
         } catch (Error err) {
             return player.getName();
         }
