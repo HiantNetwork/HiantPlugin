@@ -35,7 +35,6 @@ public final class Hiantsys extends CyberAPI {
                         .mainPackage("org.insilicon.hiantsys")
                         .prefix("Hiant")
                         .showPrefixInLogs(true)
-                        .verbose(true)
                         .luckPermsSupport(FeatureSupport.SUPPORTED)
                         .build()
         );
