@@ -9,12 +9,13 @@ public class HiantSkript {
     SkriptAddon addon;
 
     public HiantSkript() {
-        addon = Skript.registerAddon(Hiantsys.getPlugin());
         try {
+            addon = Skript.registerAddon(Hiantsys.getPlugin());
             addon.loadClasses("org.insilicon.hiantsys.skript", "elements");
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public SkriptAddon getAddonInstance() {

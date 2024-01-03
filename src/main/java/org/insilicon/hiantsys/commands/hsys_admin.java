@@ -1,11 +1,12 @@
 package org.insilicon.hiantsys.commands;
 
+
+
+import net.cybercake.cyberapi.spigot.server.commands.CommandInformation;
+import net.cybercake.cyberapi.spigot.server.commands.SpigotCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -19,17 +20,26 @@ import org.bukkit.persistence.PersistentDataType;
 import org.insilicon.hiantsys.CustomClasses.CustomGUI;
 import org.insilicon.hiantsys.Hiantsys;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class hsys_admin implements CommandExecutor, TabCompleter, Listener {
+public class hsys_admin extends SpigotCommand implements Listener {
 
-
+    public hsys_admin() {
+        super(
+                newCommand("hiantsys")
+                        .setDescription("Hiant system admin")
+                        .setPermission("hiantsys.admin")
+                        .setDescription("hiantsys")
+                        .setUsage("/hiantsys [argument]")
+                        .setAliases("hs")
+                        .build()
+        );
+    }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean perform(@NotNull CommandSender sender, @NotNull String s, CommandInformation commandInformation, String[] args) {
 
         //Check if sender is a player
         if (!(sender instanceof Player)) {
@@ -105,7 +115,7 @@ public class hsys_admin implements CommandExecutor, TabCompleter, Listener {
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public List<String> tab(@NotNull CommandSender commandSender, @NotNull String s, CommandInformation commandInformation, String[] strings) {
         //Add completions for the command [ help, admin ]
 
         //Make array of completions
@@ -311,6 +321,4 @@ public class hsys_admin implements CommandExecutor, TabCompleter, Listener {
 
 
     }
-
-
 }

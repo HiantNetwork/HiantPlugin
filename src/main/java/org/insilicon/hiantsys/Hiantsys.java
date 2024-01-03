@@ -2,17 +2,21 @@ package org.insilicon.hiantsys;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.world.World;
+import net.cybercake.cyberapi.common.builders.settings.FeatureSupport;
+import net.cybercake.cyberapi.common.builders.settings.Settings;
+import net.cybercake.cyberapi.spigot.CyberAPI;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.codehaus.plexus.util.FileUtils;
+import org.insilicon.hiantsys.skript.HiantSkript;
 import org.insilicon.hiantsys.systems.Regeneration;
 
 import java.io.File;
 import java.io.IOException;
 
-public final class Hiantsys extends JavaPlugin {
+@SuppressWarnings({"unused", "deprecation"})
+public final class Hiantsys extends CyberAPI {
 
     private static Hiantsys plugin;
     public NamespacedKey key;
@@ -26,32 +30,28 @@ public final class Hiantsys extends JavaPlugin {
         plugin = this;
         key = new NamespacedKey(Hiantsys.getPlugin(Hiantsys.class), "ElementalItem");
 
-
-
-
+        startCyberAPI(
+                Settings.builder()
+                        .mainPackage("org.insilicon.hiantsys")
+                        .prefix("Hiant")
+                        .showPrefixInLogs(true)
+                        .verbose(true)
+                        .luckPermsSupport(FeatureSupport.SUPPORTED)
+                        .build()
+        );
 
         //Config Sys
-
         try {
             initConfig();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-
         //Init FAWE world edit api
         world = BukkitAdapter.adapt(getServer().getWorld("box"));
 
-
-
-        //Register commands / tab completers / Listener
-        this.getCommand("hiantsys").setExecutor(new org.insilicon.hiantsys.commands.hsys_admin());
-        this.getCommand("hiantsys").setTabCompleter(new org.insilicon.hiantsys.commands.hsys_admin());
-        getServer().getPluginManager().registerEvents(new org.insilicon.hiantsys.commands.hsys_admin(), this);
-
-
-        //Elemental Registration
         getServer().getPluginManager().registerEvents(new org.insilicon.hiantsys.systems.ElementalTools(), this);
+        getServer().getPluginManager().registerEvents(new org.insilicon.hiantsys.commands.hsys_admin(), this);
 
         //Regeneration Registration
         //If enabled
@@ -61,7 +61,6 @@ public final class Hiantsys extends JavaPlugin {
         } else {
             System.out.println(" Regeneration is disabled");
         }
-
     }
 
     public void reloadConfig() {
@@ -85,6 +84,7 @@ public final class Hiantsys extends JavaPlugin {
         return getDataFolder();
     }
 
+    @Override
     public FileConfiguration getConfig() {
         return config;
     }
