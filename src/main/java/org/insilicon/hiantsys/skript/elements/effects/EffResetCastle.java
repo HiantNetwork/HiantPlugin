@@ -5,6 +5,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
+import net.cybercake.cyberapi.spigot.chat.Log;
 import org.bukkit.event.Event;
 import org.insilicon.hiantsys.systems.Regeneration;
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +13,11 @@ import org.jetbrains.annotations.NotNull;
 public class EffResetCastle extends Effect {
 
     static {
-        Skript.registerEffect(EffResetCastle.class, "reset hiant's nether castle");
+        try {
+            Skript.registerEffect(EffResetCastle.class, "reset hiant's nether castle");
+        }catch (Exception e) {
+            Log.error("Failed to load effect nether castle");
+        }
     }
 
     @Override

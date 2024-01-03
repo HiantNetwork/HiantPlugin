@@ -17,6 +17,10 @@ repositories {
         url = "https://oss.sonatype.org/content/groups/public/"
     }
     maven {
+        name = 'minecraft-repo'
+        url = 'https://libraries.minecraft.net/'
+    }
+    maven {
         url = 'https://repo.skriptlang.org/releases'
     }
     maven {
@@ -28,16 +32,18 @@ repositories {
 dependencies {
     compileOnly "io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT"
 
-    implementation 'com.github.CyberedCake.CyberAPI:spigot:154'
-    implementation 'com.github.CyberedCake.CyberAPI:common:154'
-    compileOnly 'com.github.SkriptLang:Skript:2.7.3'
+    implementation 'com.github.CyberedCake.CyberAPI:spigot:157'
+    implementation 'com.github.CyberedCake.CyberAPI:common:157'
+    implementation(platform("com.intellectualsites.bom:bom-newest:1.40")) // Ref: https://github.com/IntellectualSites/bom
     //https://maven.enginehub.org/repo/com/sk89q/worldedit/worldedit-bukkit/7.3.0-SNAPSHOT/
     //compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT'
 
-    implementation(platform("com.intellectualsites.bom:bom-newest:1.40")) // Ref: https://github.com/IntellectualSites/bom
+    compileOnly 'com.github.SkriptLang:Skript:2.7.3'
+    compileOnly "com.github.LeonMangler:PremiumVanishAPI:2.9.0-4"
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core")
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit") //{ isTransitive = false }
     compileOnly 'com.sk89q.worldguard:worldguard-bukkit:7.0.9'
+    compileOnly 'com.mojang:authlib:3.17.30'
 
 }
 

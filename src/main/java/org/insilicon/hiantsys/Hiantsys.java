@@ -1,14 +1,19 @@
 package org.insilicon.hiantsys;
 
+import ch.njol.skript.SkriptAddon;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.world.World;
 import net.cybercake.cyberapi.common.builders.settings.FeatureSupport;
 import net.cybercake.cyberapi.common.builders.settings.Settings;
 import net.cybercake.cyberapi.spigot.CyberAPI;
+import net.cybercake.cyberapi.spigot.basic.BetterStackTraces;
+import net.cybercake.cyberapi.spigot.chat.Log;
+import net.cybercake.cyberapi.spigot.config.Config;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.codehaus.plexus.util.FileUtils;
+import org.insilicon.hiantsys.configuration.RecipesConfig;
 import org.insilicon.hiantsys.skript.HiantSkript;
 import org.insilicon.hiantsys.systems.Regeneration;
 
@@ -22,11 +27,12 @@ public final class Hiantsys extends CyberAPI {
     public NamespacedKey key;
     public FileConfiguration config;
     public World world;
-
+    private static SkriptAddon hiantSkriptAddon;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
+        long mss = System.currentTimeMillis();
         plugin = this;
         key = new NamespacedKey(Hiantsys.getPlugin(Hiantsys.class), "ElementalItem");
 
@@ -46,22 +52,48 @@ public final class Hiantsys extends CyberAPI {
             throw new RuntimeException(e);
         }
 
+        copyDefaultConfig();
+        saveDefaultConfig();
+        reloadConfig();
+        Log.info("Loaded the configuration!");
+
+        Log.info("Main config(s) loaded");
+
         //Init FAWE world edit api
         world = BukkitAdapter.adapt(getServer().getWorld("box"));
 
-        new HiantSkript();
+        Log.info("FAWE API initialized");
+
+        HiantSkript skript = new HiantSkript();
+        hiantSkriptAddon = skript.getAddonInstance();
+
+        Log.info("Custom hiant skript stuff loaded");
 
         getServer().getPluginManager().registerEvents(new org.insilicon.hiantsys.systems.ElementalTools(), this);
         getServer().getPluginManager().registerEvents(new org.insilicon.hiantsys.commands.hsys_admin(), this);
 
+        Log.info("Successfully registered all events");
+
         //Regeneration Registration
         //If enabled
         if (config.getBoolean("regeneration.enabled")) {
-            System.out.println("Regeneration is enabled");
+            Log.info("Regeneration is enabled");
             getServer().getPluginManager().registerEvents(new Regeneration(), this);
         } else {
-            System.out.println(" Regeneration is disabled");
+            Log.info("Regeneration is disabled");
         }
+
+        Config RecipesConfigClass = RecipesConfig.getConfig();
+        try {
+            RecipesConfigClass.copyDefaults();
+            RecipesConfigClass.saveDefaults();
+            RecipesConfigClass.reload();
+        } catch (IOException e) {
+            Log.error("Error loading recipes config");
+            BetterStackTraces.print(e);
+        }
+
+        Log.info("&aLoaded " + getDescription().getName() + " [v" + getDescription().getVersion() + "], created by " + String.join(" ", getDescription().getAuthors()) + " in " + (System.currentTimeMillis() - mss) + "ms! ");
     }
 
     public void reloadConfig() {
@@ -83,6 +115,10 @@ public final class Hiantsys extends CyberAPI {
 
     public File getFolder() {
         return getDataFolder();
+    }
+
+    public SkriptAddon getHiantSkriptAddon() {
+        return hiantSkriptAddon;
     }
 
     @Override
@@ -131,10 +167,7 @@ public final class Hiantsys extends CyberAPI {
             }
         }
 
-
         config = YamlConfiguration.loadConfiguration(regenConfigFile);
-
-
 
     }
 
