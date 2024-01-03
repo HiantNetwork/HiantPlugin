@@ -23,18 +23,14 @@ import java.util.stream.Collectors;
 public class HiantUtils {
 
     public static String getDisplayNameIfExists(CommandSender sender) {
-        return getDisplayNameIfExists(sender, true, false);
+        return getDisplayNameIfExists(sender, true);
     }
 
     public static String getDisplayNameIfExists(CommandSender sender, boolean useDisplay) {
-        return getDisplayNameIfExists(sender, useDisplay, false);
-    }
-
-    public static String getDisplayNameIfExists(CommandSender sender, boolean useDisplay, boolean forceSetColor) {
         if (!(sender instanceof Player player)) return sender.getName();
         if (!useDisplay) return player.getName();
         try {
-            return forceSetColor ? "<color>" + getPrefixIfExists(sender) + "</color>" + player.getName() : CyberPlayer.from(player).getLuckPermsData().getDisplayName();
+            return CyberPlayer.from(player).getLuckPermsData().getDisplayName();
         } catch (Error err) {
             return player.getName();
         }

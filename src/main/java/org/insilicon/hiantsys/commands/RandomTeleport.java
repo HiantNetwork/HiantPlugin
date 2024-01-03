@@ -52,7 +52,7 @@ public class RandomTeleport extends SpigotCommand {
         }
         while (tpToWho == player) tpToWho = getRandomPlayer(player);
 
-        player.sendMessage(HiantUtils.coloredMiniMessage(Config.getPrefix() + "&eYou have been teleported to &a" + HiantUtils.getDisplayNameIfExists(tpToWho, true, true)));
+        player.sendMessage(HiantUtils.coloredMiniMessage(Config.getPrefix() + "&eYou have been teleported to &a" + HiantUtils.getDisplayNameIfExists(tpToWho)));
         player.teleport(tpToWho.getLocation());
         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
 
