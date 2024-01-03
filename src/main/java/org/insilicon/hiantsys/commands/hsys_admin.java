@@ -2,6 +2,7 @@ package org.insilicon.hiantsys.commands;
 
 
 
+import net.cybercake.cyberapi.spigot.chat.UChat;
 import net.cybercake.cyberapi.spigot.server.commands.CommandInformation;
 import net.cybercake.cyberapi.spigot.server.commands.SpigotCommand;
 import org.bukkit.ChatColor;
@@ -39,11 +40,16 @@ public class hsys_admin extends SpigotCommand implements Listener {
     }
 
     @Override
-    public boolean perform(@NotNull CommandSender sender, @NotNull String s, CommandInformation commandInformation, String[] args) {
+    public boolean perform(@NotNull CommandSender sender, @NotNull String command, CommandInformation commandInformation, String[] args) {
 
         //Check if sender is a player
         if (!(sender instanceof Player)) {
             sender.sendMessage("You must be a player to use this command!");
+            return true;
+        }
+
+        if (args.length == 0) {
+            sender.sendMessage(UChat.component("&cInvalid usage! &7" + commandInformation.getUsage()));
             return true;
         }
 
