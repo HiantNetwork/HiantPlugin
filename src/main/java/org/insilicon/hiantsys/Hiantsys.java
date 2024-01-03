@@ -50,6 +50,8 @@ public final class Hiantsys extends CyberAPI {
         //Init FAWE world edit api
         world = BukkitAdapter.adapt(getServer().getWorld("box"));
 
+        new HiantSkript();
+
         getServer().getPluginManager().registerEvents(new org.insilicon.hiantsys.systems.ElementalTools(), this);
         getServer().getPluginManager().registerEvents(new org.insilicon.hiantsys.commands.hsys_admin(), this);
 
