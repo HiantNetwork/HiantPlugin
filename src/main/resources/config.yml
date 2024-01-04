@@ -1,0 +1,7 @@
+prefix: '&8[&ei&8]&r '
+warnPrefix: '&8[&6i&8]&r '
+errorPrefix: '&8[&ci&8]&r '
+
+speed:
+  maximum: 10
+  minimum: 0

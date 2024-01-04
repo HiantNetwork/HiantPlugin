@@ -1,0 +1,35 @@
+regeneration:
+  enabled: true
+  interval: 60
+  castle:
+    x: 191
+    y: 66
+    z: 186
+  grass:
+    xA: 64
+    yA: 149
+    zA: -64
+    xB: -64
+    yB: 66
+    zB: 64
+  caves:
+    xA: 64
+    yA: 149
+    zA: 109
+    xB: -64
+    yB: 66
+    zB: 237
+  deepcaves:
+    xA: -98
+    yA: 149
+    zA: 109
+    xB: -226
+    yB: 66
+    zB: 237
+  nether:
+    xA: 98
+    yA: 149
+    zA: 109
+    xB: 226
+    yB: 66
+    zB: 237
