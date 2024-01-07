@@ -27,6 +27,7 @@ repositories {
         url = 'https://maven.enginehub.org/repo/'
     }
     maven { url 'https://repo.cybercake.net/repository/maven-public/' } // Same has repo.prorickey.xyz
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
