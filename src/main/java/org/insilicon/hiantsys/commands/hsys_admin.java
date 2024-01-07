@@ -178,6 +178,28 @@ public class hsys_admin extends SpigotCommand implements Listener {
 
                 giveinv.setItem(1, FireBow);
 
+
+
+                //Mechanical Elytra
+                ItemStack MechanicalElytra = new ItemStack(Material.ELYTRA);
+
+                ItemMeta MechanicalElytrameta = MechanicalElytra.getItemMeta();
+                MechanicalElytrameta.setDisplayName(ChatColor.GRAY +""+ ChatColor.BOLD + "Mechanical Elytra");
+                MechanicalElytrameta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
+                MechanicalElytrameta.getPersistentDataContainer().set(Hiantsys.getPlugin(Hiantsys.class).mechanicalelytrakey, PersistentDataType.STRING, "MechanicalElytra");
+
+                //Lore Array
+                List<String> lore = new ArrayList<>();
+                lore.add(ChatColor.LIGHT_PURPLE + "Crafted by the most genius of villagers!");
+
+                MechanicalElytrameta.setLore(lore);
+                MechanicalElytrameta.setUnbreakable(true);
+
+                MechanicalElytra.setItemMeta(MechanicalElytrameta);
+
+                giveinv.setItem(2, MechanicalElytra);
+
+
                 //Open inventory
                 ((Player) event.getWhoClicked()).openInventory(giveinv);
 
@@ -239,9 +261,9 @@ public class hsys_admin extends SpigotCommand implements Listener {
                 FireForgedDiamondSwordmeta.setDisplayName(ChatColor.RED + "FireForged Diamond Sword");
                 FireForgedDiamondSwordmeta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
 
-                System.out.println(Hiantsys.getPlugin(Hiantsys.class).key);
+                System.out.println(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey);
 
-                FireForgedDiamondSwordmeta.getPersistentDataContainer().set(Hiantsys.getPlugin(Hiantsys.class).key, PersistentDataType.STRING, "Fire");
+                FireForgedDiamondSwordmeta.getPersistentDataContainer().set(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey, PersistentDataType.STRING, "Fire");
 
 
 
@@ -262,15 +284,40 @@ public class hsys_admin extends SpigotCommand implements Listener {
                 FireBowmeta.setDisplayName(ChatColor.RED + "Fire Bow");
                 FireBowmeta.addEnchant(Enchantment.ARROW_FIRE, 1, true);
 
-                System.out.println(Hiantsys.getPlugin(Hiantsys.class).key);
+                System.out.println(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey);
 
-                FireBowmeta.getPersistentDataContainer().set(Hiantsys.getPlugin(Hiantsys.class).key, PersistentDataType.STRING, "Fire");
+                FireBowmeta.getPersistentDataContainer().set(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey, PersistentDataType.STRING, "Fire");
 
                 FireBow.setItemMeta(FireBowmeta);
 
                 FireBow.setAmount(1);
 
                 event.getWhoClicked().getInventory().addItem(FireBow);
+
+            }
+
+            if (itemName.equals(ChatColor.GRAY +""+ ChatColor.BOLD + "Mechanical Elytra")) {
+
+                ItemStack MechanicalElytra = new ItemStack(Material.ELYTRA);
+
+                ItemMeta MechanicalElytrameta = MechanicalElytra.getItemMeta();
+                MechanicalElytrameta.setDisplayName(ChatColor.GRAY +""+ ChatColor.BOLD + "Mechanical Elytra");
+                MechanicalElytrameta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
+                MechanicalElytrameta.getPersistentDataContainer().set(Hiantsys.getPlugin(Hiantsys.class).mechanicalelytrakey, PersistentDataType.INTEGER, 35);
+
+                //Lore Array
+                List<String> lore = new ArrayList<>();
+                lore.add(ChatColor.LIGHT_PURPLE + "Crafted by the most genius of villagers!");
+
+                MechanicalElytrameta.setLore(lore);
+                MechanicalElytrameta.setUnbreakable(true);
+
+                MechanicalElytra.setItemMeta(MechanicalElytrameta);
+
+                MechanicalElytra.setAmount(1);
+
+                event.getWhoClicked().getInventory().addItem(MechanicalElytra);
+
 
             }
 

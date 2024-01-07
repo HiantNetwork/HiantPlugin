@@ -24,17 +24,28 @@ import java.io.IOException;
 public final class Hiantsys extends CyberAPI {
 
     private static Hiantsys plugin;
-    public NamespacedKey key;
+
+    public NamespacedKey elementalnamespacekey;
+    public NamespacedKey mechanicalelytrakey;
+
     public FileConfiguration config;
     public World world;
     private static SkriptAddon hiantSkriptAddon;
+
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         long mss = System.currentTimeMillis();
         plugin = this;
-        key = new NamespacedKey(Hiantsys.getPlugin(Hiantsys.class), "ElementalItem");
+
+        elementalnamespacekey = new NamespacedKey(Hiantsys.getPlugin(Hiantsys.class), "ElementalItem");
+        mechanicalelytrakey = new NamespacedKey(Hiantsys.getPlugin(Hiantsys.class), "MechanicalElytra");
+
+        //Register commands / tab completers / Listener
+        this.getCommand("hiantsys").setExecutor(new org.insilicon.hiantsys.commands.hsys_admin());
+        this.getCommand("hiantsys").setTabCompleter(new org.insilicon.hiantsys.commands.hsys_admin());
+        getServer().getPluginManager().registerEvents(new org.insilicon.hiantsys.commands.hsys_admin(), this);
 
         startCyberAPI(
                 Settings.builder()
@@ -83,6 +94,10 @@ public final class Hiantsys extends CyberAPI {
             Log.info("Regeneration is disabled");
         }
 
+
+        //Mechanical Elytra Registration
+        getServer().getPluginManager().registerEvents(new org.insilicon.hiantsys.systems.MechanicalElytra(), this);
+
         Config RecipesConfigClass = RecipesConfig.getConfig();
         try {
             RecipesConfigClass.copyDefaults();
@@ -98,6 +113,7 @@ public final class Hiantsys extends CyberAPI {
 
     public void reloadConfig() {
         config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "regeneration.yml"));
+
     }
 
     @Override
