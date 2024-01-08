@@ -2,8 +2,8 @@ package org.insilicon.hiantsys.commands.main.subcommands;
 
 import net.cybercake.cyberapi.spigot.chat.UChat;
 import net.cybercake.cyberapi.spigot.chat.UTabComp;
-import net.voidedsky.common.commands.main.SubCommand;
 import org.bukkit.command.CommandSender;
+import org.insilicon.hiantsys.commands.main.SubCommand;
 
 import java.util.List;
 

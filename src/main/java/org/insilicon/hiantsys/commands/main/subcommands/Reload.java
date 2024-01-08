@@ -3,12 +3,12 @@ package org.insilicon.hiantsys.commands.main.subcommands;
 import net.cybercake.cyberapi.common.basic.Time;
 import net.cybercake.cyberapi.spigot.chat.UChat;
 import net.cybercake.cyberapi.spigot.chat.UTabComp;
-import net.voidedsky.common.Config;
-import net.voidedsky.common.Main;
-import net.voidedsky.common.Utils.CommonUtils;
-import net.voidedsky.common.commands.main.SubCommand;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
+import org.insilicon.hiantsys.Config;
+import org.insilicon.hiantsys.Hiantsys;
+import org.insilicon.hiantsys.Utils.HiantUtils;
+import org.insilicon.hiantsys.commands.main.SubCommand;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class Reload extends SubCommand {
     private static long isReloading = -1L;
 
     public Reload() {
-        super("reload", "voidedsky.common.maincmd.reload", "Reloads the plugin's configuration files!", "reload", "rl");
+        super("reload", "hiant.main.reload", "Reloads the plugin's configuration files!", "reload", "rl");
     }
 
     @Override
@@ -35,22 +35,22 @@ public class Reload extends SubCommand {
         String exceptionFile = "";
 
         try {
-            Main.getInstance().saveDefaultConfig();
-            Main.getInstance().reloadConfig();
+            Hiantsys.getInstance().saveDefaultConfig();
+            Hiantsys.getInstance().reloadConfig();
         } catch (Exception ex) {
             exception = ex;
             exceptionFile = "config.yml";
         }
 
         if (exception != null) {
-            sender.sendMessage(CommonUtils.coloredMiniMessage("whilst trying to reload the " + exceptionFile + " file!"));
-            Main.getInstance().playSound(sender, Sound.BLOCK_NOTE_BLOCK_BASS, 1F, 1F);
+            sender.sendMessage(HiantUtils.coloredMiniMessage("whilst trying to reload the " + exceptionFile + " file!"));
+            Hiantsys.getInstance().playSound(sender, Sound.BLOCK_NOTE_BLOCK_BASS, 1F, 1F);
         }
 
         sender.sendMessage(UChat.component("&6You successfully reloaded the configuration files in &a" + (System.currentTimeMillis() - mss) + "&ams&6!"));
         isReloading = -1L;
 
-        Main.getInstance().playSound(sender, Sound.ENTITY_PLAYER_LEVELUP, 1F, 1F);
+        Hiantsys.getInstance().playSound(sender, Sound.ENTITY_PLAYER_LEVELUP, 1F, 1F);
     }
 
     @Override

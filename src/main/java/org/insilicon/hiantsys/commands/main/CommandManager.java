@@ -7,13 +7,13 @@ import net.cybercake.cyberapi.spigot.chat.centered.CenteredMessage;
 import net.cybercake.cyberapi.spigot.server.commands.CommandInformation;
 import net.cybercake.cyberapi.spigot.server.commands.SpigotCommand;
 import net.md_5.bungee.api.chat.*;
-import net.voidedsky.common.Utils.CommonUtils;
-import net.voidedsky.common.commands.main.subcommands.Help;
-import net.voidedsky.common.commands.main.subcommands.Reload;
-import net.voidedsky.common.commands.main.subcommands.Tasks;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.insilicon.hiantsys.Utils.HiantUtils;
+import org.insilicon.hiantsys.commands.main.subcommands.Help;
+import org.insilicon.hiantsys.commands.main.subcommands.Reload;
+import org.insilicon.hiantsys.commands.main.subcommands.Tasks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class CommandManager extends SpigotCommand {
     @Override
     public boolean perform(@NotNull CommandSender sender, @NotNull String command, CommandInformation information, String[] args) {
         if (getSubCommandsOnlyWithPerms(sender).size() <= 1) {
-            sender.sendMessage(CommonUtils.coloredMiniMessage(noPermissionMsg));
+            sender.sendMessage(HiantUtils.coloredMiniMessage(noPermissionMsg));
         } else if (args.length == 0) {
             printHelpMsg(sender);
         } else {

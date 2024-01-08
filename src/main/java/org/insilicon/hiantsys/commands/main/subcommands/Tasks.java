@@ -2,11 +2,11 @@ package org.insilicon.hiantsys.commands.main.subcommands;
 
 import net.cybercake.cyberapi.spigot.chat.UChat;
 import net.cybercake.cyberapi.spigot.chat.UTabComp;
-import net.voidedsky.common.commands.main.SubCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitTask;
+import org.insilicon.hiantsys.commands.main.SubCommand;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public class Tasks extends SubCommand {
 
     public Tasks() {
-        super("tasks", "voidedsky.common.maincmd.tasks", "List and/or cancel certain tasks", "tasks", "gettasks");
+        super("tasks", "hiant.main.tasks", "List and/or cancel certain tasks", "tasks", "gettasks");
     }
 
     @Override
