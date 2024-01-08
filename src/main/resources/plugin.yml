@@ -2,9 +2,5 @@ name: hiantsys
 version: '${version}'
 main: org.insilicon.hiantsys.Hiantsys
 api-version: '1.20'
-commands:
-  hiantsys:
-    description: hiantsys
-    usage: /hiantsys [argument]
-    aliases: [hs]
-    permission: hiantsys.admin
+depend: [LibertyBans, LuckPerms, PremiumVanish, PlaceholderAPI]
+authors: ["Prorickey", "LukeIThink", "ModdedKid"]
