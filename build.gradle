@@ -28,6 +28,18 @@ repositories {
     }
     maven { url 'https://repo.cybercake.net/repository/maven-public/' } // Same has repo.prorickey.xyz
     maven { url 'https://jitpack.io' }
+    maven {
+        name= 'arim-mvn-lgpl3'
+        url = 'https://mvn-repo.arim.space/lesser-gpl3/'
+    }
+    maven {
+        name= 'arim-mvn-gpl3'
+        url = 'https://mvn-repo.arim.space/gpl3/'
+    }
+    maven {
+        name= 'arim-mvn-agpl3'
+        url = 'https://mvn-repo.arim.space/affero-gpl3/'
+    }
 }
 
 dependencies {
@@ -36,6 +48,11 @@ dependencies {
     implementation 'net.cybercake.cyberapi:spigot:161'
     implementation 'net.cybercake.cyberapi:common:161'
     implementation(platform("com.intellectualsites.bom:bom-newest:1.40")) // Ref: https://github.com/IntellectualSites/bom
+    implementation 'fr.mrmicky:FastInv:3.0.4'
+    implementation 'net.dv8tion:JDA:5.0.0-beta.19'
+
+    //https://maven.enginehub.org/repo/com/sk89q/worldedit/worldedit-bukkit/7.3.0-SNAPSHOT/
+    //compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT'
 
     compileOnly 'com.github.SkriptLang:Skript:2.8.0-pre1'
     compileOnly "com.github.LeonMangler:PremiumVanishAPI:2.9.0-4"
@@ -43,6 +60,8 @@ dependencies {
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit") //{ isTransitive = false }
     compileOnly 'com.sk89q.worldguard:worldguard-bukkit:7.0.9'
     compileOnly 'com.mojang:authlib:3.17.30'
+    compileOnly 'net.luckperms:api:5.4'
+    compileOnly "space.arim.libertybans:bans-api:1.1.0-RC1"
 
 }
 
@@ -56,6 +75,7 @@ build {
 
 shadowJar {
     archiveClassifier = null
+    relocate 'fr.mrmicky.fastinv', 'org.insilicon.fastinv'
 }
 
 processResources {

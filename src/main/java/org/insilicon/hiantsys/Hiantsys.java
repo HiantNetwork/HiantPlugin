@@ -3,15 +3,21 @@ package org.insilicon.hiantsys;
 import ch.njol.skript.SkriptAddon;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.world.World;
+import fr.mrmicky.fastinv.FastInvManager;
 import net.cybercake.cyberapi.common.builders.settings.FeatureSupport;
 import net.cybercake.cyberapi.common.builders.settings.Settings;
 import net.cybercake.cyberapi.spigot.CyberAPI;
 import net.cybercake.cyberapi.spigot.basic.BetterStackTraces;
 import net.cybercake.cyberapi.spigot.chat.Log;
 import net.cybercake.cyberapi.spigot.config.Config;
+import net.cybercake.cyberapi.spigot.player.CyberPlayer;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.node.types.SuffixNode;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.codehaus.plexus.util.FileUtils;
 import org.insilicon.hiantsys.configuration.RecipesConfig;
 import org.insilicon.hiantsys.skript.HiantSkript;
@@ -31,6 +37,7 @@ public final class Hiantsys extends CyberAPI {
     public FileConfiguration config;
     public World world;
     private static SkriptAddon hiantSkriptAddon;
+    private static LuckPerms luckPermsAPI;
 
 
     @Override
@@ -56,6 +63,17 @@ public final class Hiantsys extends CyberAPI {
                         .build()
         );
 
+        FastInvManager.register(this);
+        Log.info("FastINV registered successfully");
+
+        RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+        if (provider != null) {
+            luckPermsAPI = provider.getProvider();
+            Log.info("Loaded into luckperms successfully");
+        }else {
+            throw new RuntimeException("Luckperms API failed to load!");
+        }
+
         //Config Sys
         try {
             initConfig();
@@ -66,9 +84,8 @@ public final class Hiantsys extends CyberAPI {
         copyDefaultConfig();
         saveDefaultConfig();
         reloadConfig();
-        Log.info("Loaded the configuration!");
-
         Log.info("Main config(s) loaded");
+
 
         //Init FAWE world edit api
         world = BukkitAdapter.adapt(getServer().getWorld("box"));
@@ -136,6 +153,8 @@ public final class Hiantsys extends CyberAPI {
     public SkriptAddon getHiantSkriptAddon() {
         return hiantSkriptAddon;
     }
+
+    public static LuckPerms getLuckpermsAPI() { return luckPermsAPI; }
 
     @Override
     public FileConfiguration getConfig() {

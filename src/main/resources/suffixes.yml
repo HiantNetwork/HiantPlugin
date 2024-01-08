@@ -1,0 +1,6 @@
+suffixes:
+  suffixPrefix: "" # Could be like * or something but not needed
+  list:
+    # MESSAGES SUPPORT BOTH MINI MESSAGE AND LEGACY COLORS
+    # Permission for messages is hiant.suffix.(name without color) [EX: hiant.suffix.rainbow]
+    "<rainbow>Rainbow</rainbow>": "<rainbow>rainbow</rainbow>"

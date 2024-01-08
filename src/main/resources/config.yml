@@ -5,3 +5,14 @@ errorPrefix: '&8[&ci&8]&r '
 speed:
   maximum: 10
   minimum: 0
+
+chat:
+  # Suffixes
+  suffixMustIncludeBrackets: true # Checks if the message starts with "[" and ends with "]"
+  suffixBracketsColorAllowed: true
+  suffixesEnabled: true
+  suffixLengthIncludeColors: false
+  maxSuffixLength: 16 # -1 to disable
+
+discordBot:
+  token:

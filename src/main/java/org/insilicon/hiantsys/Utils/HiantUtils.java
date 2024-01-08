@@ -8,10 +8,16 @@ import net.cybercake.cyberapi.spigot.player.CyberPlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import net.luckperms.api.model.data.DataMutateResult;
+import net.luckperms.api.model.user.User;
+import net.luckperms.api.node.Node;
+import net.luckperms.api.node.types.SuffixNode;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
+import org.insilicon.hiantsys.Hiantsys;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -41,6 +47,28 @@ public class HiantUtils {
         try {
             String prefix = CyberPlayer.from(player).getLuckPermsData().getPrefix();
             return (prefix == null ? "" : prefix);
+        } catch (Error err) {
+            return "";
+        }
+    }
+
+    public static void setPlayerSuffix(Player player, String suffix, int weight) {
+        SuffixNode node = SuffixNode.builder(suffix, weight).build();
+//        User user = Hiantsys.getLuckpermsAPI().getPlayerAdapter(Player.class).getUser(player);
+//        DataMutateResult result = user.data().add(node);
+//        Hiantsys.getLuckpermsAPI().getUserManager().saveUser(user);
+//        return result.wasSuccessful();
+
+        Hiantsys.getLuckpermsAPI().getUserManager().modifyUser(player.getUniqueId(), user -> {
+            user.data().add(node);
+        });
+    }
+
+    public static String getSuffixIfExists(CommandSender sender) {
+        if (!(sender instanceof Player player)) return sender.getName();
+        try {
+            String suffix = CyberPlayer.from(player).getLuckPermsData().getSuffix();
+            return (suffix == null ? "" : suffix);
         } catch (Error err) {
             return "";
         }
