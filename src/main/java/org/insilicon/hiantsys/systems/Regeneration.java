@@ -41,6 +41,7 @@ public class Regeneration implements Listener {
         }
         EditSession session = WorldEdit.getInstance().newEditSession(world);
         session.setBlocks((Region) new CuboidRegion(reg.getMinimumPoint(), reg.getMaximumPoint()), BlockTypes.AIR.getDefaultState());
+        session.close();
     }
 
     public static void resetCastle() throws IOException {
