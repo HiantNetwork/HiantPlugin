@@ -17,6 +17,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.codehaus.plexus.util.FileUtils;
+import org.insilicon.hiantsys.commands.main.CommandManager;
 import org.insilicon.hiantsys.configuration.RecipesConfig;
 import org.insilicon.hiantsys.skript.HiantSkript;
 import org.insilicon.hiantsys.systems.Regeneration;
@@ -48,8 +49,9 @@ public final class Hiantsys extends CyberAPI {
         mechanicalelytrakey = new NamespacedKey(Hiantsys.getPlugin(Hiantsys.class), "MechanicalElytra");
 
         //Register commands / tab completers / Listener
-        this.getCommand("hiantsys").setExecutor(new org.insilicon.hiantsys.commands.hsys_admin());
-        this.getCommand("hiantsys").setTabCompleter(new org.insilicon.hiantsys.commands.hsys_admin());
+        //this.getCommand("hiantsys").setExecutor(new org.insilicon.hiantsys.commands.hsys_admin());
+        //this.getCommand("hiantsys").setTabCompleter(new org.insilicon.hiantsys.commands.hsys_admin());
+        new CommandManager();
         getServer().getPluginManager().registerEvents(new org.insilicon.hiantsys.commands.hsys_admin(), this);
 
         startCyberAPI(
