@@ -106,7 +106,12 @@ public class Suffixes extends FastInv {
                 ItemStack itemStack = new ItemCreator.ItemBuilder(Material.NAME_TAG)
                         .itemTextFormatter(ItemCreator.ItemTextFormatter.MINIMESSAGE)
                         .name(HiantUtils.convertLegacyColors(key))
-                        .lore(HiantUtils.convertLegacyColors(value.replace("%player%", player.getName())),
+                        .lore(HiantUtils.convertLegacyColors(
+                                                value.replace("%player%", player.getName())
+                                                        .replace("%playerdisplay%", HiantUtils.getDisplayNameIfExists(player))
+                                                        .replace("%playerprefix%", HiantUtils.getPrefixIfExists(player))
+                                                        .replace("%suffix%", key)
+                                ),
                                 "\n",
                                 HiantUtils.convertLegacyColors("Click to set as your suffix!")
                         ).build();
@@ -114,10 +119,6 @@ public class Suffixes extends FastInv {
                 ItemMeta meta = itemStack.getItemMeta();
                 meta.getPersistentDataContainer().set(new NamespacedKey(Hiantsys.getInstance(), "key"), PersistentDataType.STRING, key);
                 meta.getPersistentDataContainer().set(new NamespacedKey(Hiantsys.getInstance(), "value"), PersistentDataType.STRING, value);
-//                if (PlayerCache.has("serverjoinmessage") && PlayerCache.getString("serverjoinmessage").split("::")[0].equals(key)) {
-//                    meta.addEnchant(Enchantment.DURABILITY, 1, false);
-//                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-//                }
 
                 itemStack.setItemMeta(meta);
 
@@ -188,6 +189,9 @@ public class Suffixes extends FastInv {
 //                CyberAPI.getInstance().playSound(player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
 //                player.sendMessage(CommonUtils.coloredMiniMessage(Config.getWarnPrefix() + "&7You unselected " + key));
 //            }
+
+            HiantUtils.setPlayerSuffix(player, key, 1);
+            player.sendMessage(HiantUtils.coloredMiniMessage(Config.getPrefix() + "&eYou selected prefix &6" + key));
 
             getInventory().close();
 //            new Suffixes(player, startingItem, currentPage).open(player);

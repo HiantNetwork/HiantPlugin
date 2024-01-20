@@ -9,6 +9,6 @@ public class SuffixConfig {
     }
 
     public static FileConfiguration getFileConfig() {
-        return new Config("suffices").values();
+        return new Config("suffixes").values();
     }
 }

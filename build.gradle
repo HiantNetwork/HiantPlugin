@@ -45,8 +45,8 @@ repositories {
 dependencies {
     compileOnly "io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT"
 
-    implementation 'net.cybercake.cyberapi:spigot:161'
-    implementation 'net.cybercake.cyberapi:common:161'
+    implementation 'net.cybercake.cyberapi:spigot:171'
+    implementation 'net.cybercake.cyberapi:common:171'
     implementation(platform("com.intellectualsites.bom:bom-newest:1.40")) // Ref: https://github.com/IntellectualSites/bom
     implementation 'fr.mrmicky:FastInv:3.0.4'
     implementation 'net.dv8tion:JDA:5.0.0-beta.19'

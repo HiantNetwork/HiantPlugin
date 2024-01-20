@@ -6,6 +6,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import net.cybercake.cyberapi.spigot.chat.Log;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +16,11 @@ import org.jetbrains.annotations.Nullable;
 public class ExprDefaultItemName extends SimpleExpression<String> {
 
     static {
-        Skript.registerExpression(ExprDefaultItemName.class, String.class, ExpressionType.COMBINED, "[the] default item name of %itemstacks%");
+        try {
+            Skript.registerExpression(ExprDefaultItemName.class, String.class, ExpressionType.COMBINED, "[the] default item name of %itemstacks%");
+        }catch(Exception ignored) {
+            Log.error("Failed to load expression DefaultItemName");
+        }
     }
 
     private Expression<ItemStack> item;
