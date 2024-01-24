@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.insilicon.hiantsys.Config;
-import org.insilicon.hiantsys.Hiantsys;
+import org.insilicon.hiantsys.HiantPlugin;
 import org.insilicon.hiantsys.Utils.HiantUtils;
 import org.insilicon.hiantsys.configuration.SuffixConfig;
 
@@ -97,8 +97,8 @@ public class Suffixes extends FastInv {
                         ).build();
 
                 ItemMeta noPermsMeta = itemStack.getItemMeta();
-                noPermsMeta.getPersistentDataContainer().set(new NamespacedKey(Hiantsys.getInstance(), "key"), PersistentDataType.STRING, "noPermissionsAllowedForTag");
-                noPermsMeta.getPersistentDataContainer().set(new NamespacedKey(Hiantsys.getInstance(), "value"), PersistentDataType.STRING, "noPermissionsAllowedForTag");
+                noPermsMeta.getPersistentDataContainer().set(new NamespacedKey(HiantPlugin.getInstance(), "key"), PersistentDataType.STRING, "noPermissionsAllowedForTag");
+                noPermsMeta.getPersistentDataContainer().set(new NamespacedKey(HiantPlugin.getInstance(), "value"), PersistentDataType.STRING, "noPermissionsAllowedForTag");
                 itemStack.setItemMeta(noPermsMeta);
 
                 setItem(currentSlot, itemStack);
@@ -117,8 +117,8 @@ public class Suffixes extends FastInv {
                         ).build();
 
                 ItemMeta meta = itemStack.getItemMeta();
-                meta.getPersistentDataContainer().set(new NamespacedKey(Hiantsys.getInstance(), "key"), PersistentDataType.STRING, key);
-                meta.getPersistentDataContainer().set(new NamespacedKey(Hiantsys.getInstance(), "value"), PersistentDataType.STRING, value);
+                meta.getPersistentDataContainer().set(new NamespacedKey(HiantPlugin.getInstance(), "key"), PersistentDataType.STRING, key);
+                meta.getPersistentDataContainer().set(new NamespacedKey(HiantPlugin.getInstance(), "value"), PersistentDataType.STRING, value);
 
                 itemStack.setItemMeta(meta);
 
@@ -135,8 +135,8 @@ public class Suffixes extends FastInv {
         player.setItemOnCursor(new ItemStack(Material.AIR));
         player.updateInventory();
 
-        Bukkit.getScheduler().runTaskLater(Hiantsys.getInstance(), player::updateInventory, 5);
-        Bukkit.getScheduler().runTaskLater(Hiantsys.getInstance(), player::updateInventory, 10);
+        Bukkit.getScheduler().runTaskLater(HiantPlugin.getInstance(), player::updateInventory, 5);
+        Bukkit.getScheduler().runTaskLater(HiantPlugin.getInstance(), player::updateInventory, 10);
     }
 
     @Override
@@ -168,8 +168,8 @@ public class Suffixes extends FastInv {
 
         if (getInventory().getItem(currentSlot) != null && getInventory().getItem(currentSlot).getType() == Material.NAME_TAG) {
             ItemMeta meta = getInventory().getItem(currentSlot).getItemMeta();
-            String key = meta.getPersistentDataContainer().get(new NamespacedKey(Hiantsys.getInstance(), "key"), PersistentDataType.STRING);
-            String value = meta.getPersistentDataContainer().get(new NamespacedKey(Hiantsys.getInstance(), "value"), PersistentDataType.STRING);
+            String key = meta.getPersistentDataContainer().get(new NamespacedKey(HiantPlugin.getInstance(), "key"), PersistentDataType.STRING);
+            String value = meta.getPersistentDataContainer().get(new NamespacedKey(HiantPlugin.getInstance(), "value"), PersistentDataType.STRING);
 
             if (key.equals("noPermissionsAllowedForTag") || value.equals("noPermissionsAllowedForTag")) {
                 Log.info("no perms, returning");

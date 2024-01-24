@@ -26,9 +26,9 @@ import java.io.File;
 import java.io.IOException;
 
 @SuppressWarnings({"unused", "deprecation"})
-public final class Hiantsys extends CyberAPI {
+public final class HiantPlugin extends CyberAPI {
 
-    private static Hiantsys plugin;
+    private static HiantPlugin plugin;
 
     public NamespacedKey elementalnamespacekey;
     public NamespacedKey mechanicalelytrakey;
@@ -45,8 +45,8 @@ public final class Hiantsys extends CyberAPI {
         long mss = System.currentTimeMillis();
         plugin = this;
 
-        elementalnamespacekey = new NamespacedKey(Hiantsys.getPlugin(Hiantsys.class), "ElementalItem");
-        mechanicalelytrakey = new NamespacedKey(Hiantsys.getPlugin(Hiantsys.class), "MechanicalElytra");
+        elementalnamespacekey = new NamespacedKey(HiantPlugin.getPlugin(HiantPlugin.class), "ElementalItem");
+        mechanicalelytrakey = new NamespacedKey(HiantPlugin.getPlugin(HiantPlugin.class), "MechanicalElytra");
 
         //Register commands / tab completers / Listener
         //this.getCommand("hiantsys").setExecutor(new org.insilicon.hiantsys.commands.hsys_admin());
@@ -138,7 +138,7 @@ public final class Hiantsys extends CyberAPI {
         // Plugin shutdown logic
     }
 
-    public static Hiantsys getPlugin() {
+    public static HiantPlugin getPlugin() {
         return plugin;
     }
 

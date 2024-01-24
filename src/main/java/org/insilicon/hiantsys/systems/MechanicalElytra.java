@@ -5,11 +5,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
-import org.insilicon.hiantsys.Hiantsys;
+import org.insilicon.hiantsys.HiantPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ public class MechanicalElytra implements Listener  {
         //CHeck if they are no longer flying or if they are flying
         if (event.getPlayer().isGliding()) {
             //if player is wearing elytra with pdt key of mechanicalelytra
-            if (event.getPlayer().getInventory().getChestplate() != null && event.getPlayer().getInventory().getChestplate().getType().equals(Material.ELYTRA) && event.getPlayer().getInventory().getChestplate().getItemMeta().getPersistentDataContainer().has(org.insilicon.hiantsys.Hiantsys.getPlugin(org.insilicon.hiantsys.Hiantsys.class).mechanicalelytrakey, org.bukkit.persistence.PersistentDataType.STRING)) {
+            if (event.getPlayer().getInventory().getChestplate() != null && event.getPlayer().getInventory().getChestplate().getType().equals(Material.ELYTRA) && event.getPlayer().getInventory().getChestplate().getItemMeta().getPersistentDataContainer().has(HiantPlugin.getPlugin(HiantPlugin.class).mechanicalelytrakey, org.bukkit.persistence.PersistentDataType.STRING)) {
 
             } else {
                 return;
@@ -80,7 +79,7 @@ public class MechanicalElytra implements Listener  {
         ItemStack elytra = player.getInventory().getChestplate();
 
         System.out.println();
-        if (speed < elytra.getItemMeta().getPersistentDataContainer().get(Hiantsys.getPlugin().mechanicalelytrakey, PersistentDataType.INTEGER) && player.isSneaking()) {
+        if (speed < elytra.getItemMeta().getPersistentDataContainer().get(HiantPlugin.getPlugin().mechanicalelytrakey, PersistentDataType.INTEGER) && player.isSneaking()) {
             System.out.println("Velocity increased");
 
             // Get the player's current looking direction

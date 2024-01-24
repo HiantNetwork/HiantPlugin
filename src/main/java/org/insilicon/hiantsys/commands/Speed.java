@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.insilicon.hiantsys.Config;
-import org.insilicon.hiantsys.Hiantsys;
+import org.insilicon.hiantsys.HiantPlugin;
 import org.insilicon.hiantsys.Utils.HiantUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,8 +34,8 @@ public class Speed extends SpigotCommand {
     }
 
     public void speed() {
-        max = Hiantsys.getConf().getInt("speed.maximum", 10);
-        min = Hiantsys.getConf().getInt("speed.minimum", 1);
+        max = HiantPlugin.getConf().getInt("speed.maximum", 10);
+        min = HiantPlugin.getConf().getInt("speed.minimum", 1);
     }
 
     @Override

@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.insilicon.hiantsys.CustomClasses.CustomGUI;
-import org.insilicon.hiantsys.Hiantsys;
+import org.insilicon.hiantsys.HiantPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -186,7 +186,7 @@ public class hsys_admin extends SpigotCommand implements Listener {
                 ItemMeta MechanicalElytrameta = MechanicalElytra.getItemMeta();
                 MechanicalElytrameta.setDisplayName(ChatColor.GRAY +""+ ChatColor.BOLD + "Mechanical Elytra");
                 MechanicalElytrameta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
-                MechanicalElytrameta.getPersistentDataContainer().set(Hiantsys.getPlugin(Hiantsys.class).mechanicalelytrakey, PersistentDataType.STRING, "MechanicalElytra");
+                MechanicalElytrameta.getPersistentDataContainer().set(HiantPlugin.getPlugin(HiantPlugin.class).mechanicalelytrakey, PersistentDataType.STRING, "MechanicalElytra");
 
                 //Lore Array
                 List<String> lore = new ArrayList<>();
@@ -231,7 +231,7 @@ public class hsys_admin extends SpigotCommand implements Listener {
                 reloadmeta.setDisplayName(ChatColor.DARK_PURPLE + "Reload");
                 reload.setItemMeta(reloadmeta);
 
-                FileConfiguration config = Hiantsys.getPlugin(Hiantsys.class).getConfig();
+                FileConfiguration config = HiantPlugin.getPlugin(HiantPlugin.class).getConfig();
                 if (config.getBoolean("regeneration.enabled")) {
                     regeninv.setItem(1, enabled);
                 } else {
@@ -261,9 +261,9 @@ public class hsys_admin extends SpigotCommand implements Listener {
                 FireForgedDiamondSwordmeta.setDisplayName(ChatColor.RED + "FireForged Diamond Sword");
                 FireForgedDiamondSwordmeta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
 
-                System.out.println(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey);
+                System.out.println(HiantPlugin.getPlugin(HiantPlugin.class).elementalnamespacekey);
 
-                FireForgedDiamondSwordmeta.getPersistentDataContainer().set(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey, PersistentDataType.STRING, "Fire");
+                FireForgedDiamondSwordmeta.getPersistentDataContainer().set(HiantPlugin.getPlugin(HiantPlugin.class).elementalnamespacekey, PersistentDataType.STRING, "Fire");
 
 
 
@@ -284,9 +284,9 @@ public class hsys_admin extends SpigotCommand implements Listener {
                 FireBowmeta.setDisplayName(ChatColor.RED + "Fire Bow");
                 FireBowmeta.addEnchant(Enchantment.ARROW_FIRE, 1, true);
 
-                System.out.println(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey);
+                System.out.println(HiantPlugin.getPlugin(HiantPlugin.class).elementalnamespacekey);
 
-                FireBowmeta.getPersistentDataContainer().set(Hiantsys.getPlugin(Hiantsys.class).elementalnamespacekey, PersistentDataType.STRING, "Fire");
+                FireBowmeta.getPersistentDataContainer().set(HiantPlugin.getPlugin(HiantPlugin.class).elementalnamespacekey, PersistentDataType.STRING, "Fire");
 
                 FireBow.setItemMeta(FireBowmeta);
 
@@ -303,7 +303,7 @@ public class hsys_admin extends SpigotCommand implements Listener {
                 ItemMeta MechanicalElytrameta = MechanicalElytra.getItemMeta();
                 MechanicalElytrameta.setDisplayName(ChatColor.GRAY +""+ ChatColor.BOLD + "Mechanical Elytra");
                 MechanicalElytrameta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
-                MechanicalElytrameta.getPersistentDataContainer().set(Hiantsys.getPlugin(Hiantsys.class).mechanicalelytrakey, PersistentDataType.INTEGER, 35);
+                MechanicalElytrameta.getPersistentDataContainer().set(HiantPlugin.getPlugin(HiantPlugin.class).mechanicalelytrakey, PersistentDataType.INTEGER, 35);
 
                 //Lore Array
                 List<String> lore = new ArrayList<>();
@@ -343,7 +343,7 @@ public class hsys_admin extends SpigotCommand implements Listener {
             if (itemName.equals(ChatColor.GREEN + "Enabled")) {
 
                 //On the config set regeneration.enabled to false and save the config
-                FileConfiguration config = Hiantsys.getPlugin(Hiantsys.class).getConfig();
+                FileConfiguration config = HiantPlugin.getPlugin(HiantPlugin.class).getConfig();
                 config.set("regeneration.enabled", false);
                 event.getView().setItem(1, disabled);
 
@@ -351,7 +351,7 @@ public class hsys_admin extends SpigotCommand implements Listener {
             }
             if (itemName.equals(ChatColor.RED + "Disabled")) {
 
-                FileConfiguration config = Hiantsys.getPlugin(Hiantsys.class).getConfig();
+                FileConfiguration config = HiantPlugin.getPlugin(HiantPlugin.class).getConfig();
                 config.set("regeneration.enabled", true);
                 event.getView().setItem(1, enabled);
 
@@ -363,7 +363,7 @@ public class hsys_admin extends SpigotCommand implements Listener {
                 Player player = (Player) event.getWhoClicked();
 
                 player.sendMessage(ChatColor.DARK_PURPLE + "Reloading...");
-                Hiantsys.getPlugin(Hiantsys.class).reloadConfig();
+                HiantPlugin.getPlugin(HiantPlugin.class).reloadConfig();
                 player.sendMessage(ChatColor.GREEN + "Reloaded!");
             }
 

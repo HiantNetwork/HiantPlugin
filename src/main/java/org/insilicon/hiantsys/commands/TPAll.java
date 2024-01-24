@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.insilicon.hiantsys.Config;
-import org.insilicon.hiantsys.Hiantsys;
+import org.insilicon.hiantsys.HiantPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -59,6 +59,6 @@ public class TPAll extends SpigotCommand {
     public List<String> tab(@NotNull CommandSender sender, @NotNull String command, CommandInformation information, String[] args) {
         if (args.length != 1) return UTabComp.emptyList;
 
-        return UTabComp.tabCompletionsSearch(args[0], Hiantsys.getInstance().getOnlinePlayersUsernames());
+        return UTabComp.tabCompletionsSearch(args[0], HiantPlugin.getInstance().getOnlinePlayersUsernames());
     }
 }

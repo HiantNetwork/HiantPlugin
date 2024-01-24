@@ -9,7 +9,7 @@ import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.insilicon.hiantsys.Config;
-import org.insilicon.hiantsys.Hiantsys;
+import org.insilicon.hiantsys.HiantPlugin;
 import org.insilicon.hiantsys.Utils.HiantUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +30,7 @@ public class RandomTeleport extends SpigotCommand {
     }
 
     public Player getRandomPlayer(Player yourself) {
-        List<Player> allPlayers = Hiantsys.getInstance().getOnlinePlayers();
+        List<Player> allPlayers = HiantPlugin.getInstance().getOnlinePlayers();
         allPlayers.remove(yourself);
         if (allPlayers.isEmpty())
             return null;

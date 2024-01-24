@@ -8,16 +8,12 @@ import net.cybercake.cyberapi.spigot.player.CyberPlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import net.luckperms.api.model.data.DataMutateResult;
-import net.luckperms.api.model.user.User;
-import net.luckperms.api.node.Node;
 import net.luckperms.api.node.types.SuffixNode;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
-import org.insilicon.hiantsys.Hiantsys;
+import org.insilicon.hiantsys.HiantPlugin;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -59,7 +55,7 @@ public class HiantUtils {
 //        Hiantsys.getLuckpermsAPI().getUserManager().saveUser(user);
 //        return result.wasSuccessful();
 
-        Hiantsys.getLuckpermsAPI().getUserManager().modifyUser(player.getUniqueId(), user -> {
+        HiantPlugin.getLuckpermsAPI().getUserManager().modifyUser(player.getUniqueId(), user -> {
             user.data().add(node);
         });
     }

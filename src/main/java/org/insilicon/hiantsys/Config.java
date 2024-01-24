@@ -3,14 +3,14 @@ package org.insilicon.hiantsys;
 public class Config {
 
     public static String getPrefix() {
-        return Hiantsys.getConf().getString("prefix");
+        return HiantPlugin.getConf().getString("prefix");
     }
 
     public static String getWarnPrefix() {
-        return Hiantsys.getConf().getString("warnPrefix");
+        return HiantPlugin.getConf().getString("warnPrefix");
     }
 
     public static String getErrorPrefix() {
-        return Hiantsys.getConf().getString("errorPrefix");
+        return HiantPlugin.getConf().getString("errorPrefix");
     }
 }

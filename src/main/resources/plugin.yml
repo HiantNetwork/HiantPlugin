@@ -1,6 +1,6 @@
-name: hiantsys
+name: HiantPlugin
 version: '${version}'
-main: org.insilicon.hiantsys.Hiantsys
+main: org.insilicon.hiantsys.HiantPlugin
 api-version: '1.20'
 depend: [LibertyBans, LuckPerms, PremiumVanish, PlaceholderAPI]
 authors: ["Prorickey", "LukeIThink", "ModdedKid"]

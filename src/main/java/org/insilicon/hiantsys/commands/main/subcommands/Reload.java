@@ -6,7 +6,7 @@ import net.cybercake.cyberapi.spigot.chat.UTabComp;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.insilicon.hiantsys.Config;
-import org.insilicon.hiantsys.Hiantsys;
+import org.insilicon.hiantsys.HiantPlugin;
 import org.insilicon.hiantsys.Utils.HiantUtils;
 import org.insilicon.hiantsys.commands.main.SubCommand;
 
@@ -35,8 +35,8 @@ public class Reload extends SubCommand {
         String exceptionFile = "";
 
         try {
-            Hiantsys.getInstance().saveDefaultConfig();
-            Hiantsys.getInstance().reloadConfig();
+            HiantPlugin.getInstance().saveDefaultConfig();
+            HiantPlugin.getInstance().reloadConfig();
         } catch (Exception ex) {
             exception = ex;
             exceptionFile = "config.yml";
@@ -44,13 +44,13 @@ public class Reload extends SubCommand {
 
         if (exception != null) {
             sender.sendMessage(HiantUtils.coloredMiniMessage("whilst trying to reload the " + exceptionFile + " file!"));
-            Hiantsys.getInstance().playSound(sender, Sound.BLOCK_NOTE_BLOCK_BASS, 1F, 1F);
+            HiantPlugin.getInstance().playSound(sender, Sound.BLOCK_NOTE_BLOCK_BASS, 1F, 1F);
         }
 
         sender.sendMessage(UChat.component("&6You successfully reloaded the configuration files in &a" + (System.currentTimeMillis() - mss) + "&ams&6!"));
         isReloading = -1L;
 
-        Hiantsys.getInstance().playSound(sender, Sound.ENTITY_PLAYER_LEVELUP, 1F, 1F);
+        HiantPlugin.getInstance().playSound(sender, Sound.ENTITY_PLAYER_LEVELUP, 1F, 1F);
     }
 
     @Override

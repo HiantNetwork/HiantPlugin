@@ -3,12 +3,12 @@ package org.insilicon.hiantsys.CustomClasses;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.insilicon.hiantsys.Hiantsys;
+import org.insilicon.hiantsys.HiantPlugin;
 
 public class ElementalItem {
     private String name;
     private String description;
-    public NamespacedKey key = new NamespacedKey(Hiantsys.getPlugin(Hiantsys.class), "ElementalItem");
+    public NamespacedKey key = new NamespacedKey(HiantPlugin.getPlugin(HiantPlugin.class), "ElementalItem");
     private String ElementalVal;
 
     public ElementalItem(String Inputname, String Inputdescription, String ElementalValue) {
