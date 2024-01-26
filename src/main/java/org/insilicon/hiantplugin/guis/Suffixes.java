@@ -34,6 +34,7 @@ public class Suffixes extends FastInv {
     private final ItemBuilder NEXT_PAGE = new ItemBuilder(Material.GREEN_WOOL).name(UChat.chat("&aNext page"));
     private final ItemBuilder LAST_PAGE = new ItemBuilder(Material.RED_WOOL).name(UChat.chat("&cPrevious page"));
     private final ItemStack CLOSE_GUI = new ItemBuilder(Material.BARRIER).name(UChat.chat("&cClose")).build();
+    private final ItemStack RESET_PREFIX = new ItemBuilder(Material.REDSTONE_TORCH).name(UChat.chat("&4Reset suffix")).build();
 
     public Suffixes(Player player, int startingItem, int currentPage) {
         super(getDoubleChest(), "Suffixes (" + currentPage + ")");
@@ -49,6 +50,7 @@ public class Suffixes extends FastInv {
         ItemStack BORDER_ITEM = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).name(" ").build();
         setItems(getBorders(), BORDER_ITEM);
         setItem(49, CLOSE_GUI);
+        setItem(45, RESET_PREFIX);
 
         ConfigurationSection section = SuffixConfig.getFileConfig().getConfigurationSection("suffixes.list");
         if (section == null) return;
@@ -107,10 +109,10 @@ public class Suffixes extends FastInv {
                         .itemTextFormatter(ItemCreator.ItemTextFormatter.MINIMESSAGE)
                         .name(HiantUtils.convertLegacyColors(key))
                         .lore(HiantUtils.convertLegacyColors(
-                                                value.replace("%player%", player.getName())
-                                                        .replace("%playerdisplay%", HiantUtils.getDisplayNameIfExists(player))
-                                                        .replace("%playerprefix%", HiantUtils.getPrefixIfExists(player))
-                                                        .replace("%suffix%", key)
+                                        value.replace("%player%", player.getName())
+                                                .replace("%playerdisplay%", HiantUtils.getDisplayNameIfExists(player))
+                                                .replace("%playerprefix%", HiantUtils.getPrefixIfExists(player))
+                                                .replace("%suffix%", key)
                                 ),
                                 "\n",
                                 HiantUtils.convertLegacyColors("Click to set as your suffix!")
@@ -160,6 +162,13 @@ public class Suffixes extends FastInv {
             return;
         }
 
+        if (getInventory().getItem(currentSlot) != null && (getInventory().getItem(currentSlot).equals(RESET_PREFIX))) {
+            HiantUtils.removePlayerSuffix(player, 1);
+            player.sendMessage(HiantUtils.coloredMiniMessage(Config.getPrefix() + "&eYou reset your suffix"));
+            getInventory().close();
+            return;
+        }
+
         if (getInventory().getItem(currentSlot) != null && (getInventory().getItem(currentSlot).getType().equals(Material.BARRIER))) {
             CyberAPI.getInstance().playSound(player, Sound.ENTITY_VILLAGER_NO, 1, 1);
             player.sendMessage(UChat.component(Config.getErrorPrefix() + "&cUnlock that suffix with &b/store"));
@@ -191,7 +200,7 @@ public class Suffixes extends FastInv {
 //            }
 
             HiantUtils.setPlayerSuffix(player, key, 1);
-            player.sendMessage(HiantUtils.coloredMiniMessage(Config.getPrefix() + "&eYou selected prefix &6" + key));
+            player.sendMessage(HiantUtils.coloredMiniMessage(Config.getPrefix() + "&eYou selected suffix &6" + key));
 
             getInventory().close();
 //            new Suffixes(player, startingItem, currentPage).open(player);

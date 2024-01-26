@@ -8,12 +8,15 @@ import net.cybercake.cyberapi.spigot.player.CyberPlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import net.luckperms.api.context.ContextSet;
+import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.SuffixNode;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.insilicon.hiantplugin.HiantPlugin;
+import org.insilicon.hiantplugin.guis.Suffixes;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -50,13 +53,17 @@ public class HiantUtils {
 
     public static void setPlayerSuffix(Player player, String suffix, int weight) {
         SuffixNode node = SuffixNode.builder(suffix, weight).build();
-//        User user = Hiantsys.getLuckpermsAPI().getPlayerAdapter(Player.class).getUser(player);
-//        DataMutateResult result = user.data().add(node);
-//        Hiantsys.getLuckpermsAPI().getUserManager().saveUser(user);
-//        return result.wasSuccessful();
 
         HiantPlugin.getLuckpermsAPI().getUserManager().modifyUser(player.getUniqueId(), user -> {
+            // Remove all other player suffixes
+            user.data().clear(NodeType.SUFFIX.predicate(sn -> sn.getPriority() == 1));
             user.data().add(node);
+        });
+    }
+
+    public static void removePlayerSuffix(Player player, int level) {
+        HiantPlugin.getLuckpermsAPI().getUserManager().modifyUser(player.getUniqueId(), user -> {
+            user.data().clear(NodeType.SUFFIX.predicate(sn -> sn.getPriority() == level));
         });
     }
 
@@ -83,7 +90,7 @@ public class HiantUtils {
     }
 
     public static String convertLegacyColors(String legacy) {
-        String noStupidSymbol = legacy.replaceAll("§", "&");
+        String noStupidSymbol = legacy.replaceAll("ยง", "&");
         return noStupidSymbol.replaceAll("&0", "<reset><black>")
                 .replaceAll("&1", "<reset><dark_blue>")
                 .replaceAll("&2", "<reset><dark_green>")

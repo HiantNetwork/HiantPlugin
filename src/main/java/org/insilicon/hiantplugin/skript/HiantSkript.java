@@ -28,7 +28,8 @@ public class HiantSkript {
 
             Log.info("Loaded all skript things");
         } catch (Exception e) {
-            BetterStackTraces.print(e);
+            Log.info("Failed to load skript");
+//            BetterStackTraces.print(e);
         }
     }
 
