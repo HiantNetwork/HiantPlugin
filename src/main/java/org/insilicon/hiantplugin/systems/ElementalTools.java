@@ -75,9 +75,9 @@ public class ElementalTools implements Listener {
     //On Kill Event
     @EventHandler
     public void onKill(EntityDeathEvent event) {
-        System.out.println("EntityDeathEvent");
+        //System.out.println("EntityDeathEvent");
         if (event.getEntity().getKiller() instanceof Player && event.getEntity() instanceof Player) {
-            System.out.println("Both players");
+            //System.out.println("Both players");
         } else {
             return;
         }
@@ -88,15 +88,15 @@ public class ElementalTools implements Listener {
 
         //Get the item the victim was killed with
         ItemStack item = attacker.getInventory().getItemInMainHand();
-        System.out.println(item);
+        //System.out.println(item);
 
-        System.out.println(HiantPlugin.getPlugin(HiantPlugin.class).elementalnamespacekey);
+        //System.out.println(HiantPlugin.getPlugin(HiantPlugin.class).elementalnamespacekey);
 
 
 
         //Check if the item has the ElementalItem key
         if (item.getItemMeta().getPersistentDataContainer().has(HiantPlugin.getPlugin(HiantPlugin.class).elementalnamespacekey, org.bukkit.persistence.PersistentDataType.STRING)) {
-            System.out.println("Player killed with ElementalItem");
+            //System.out.println("Player killed with ElementalItem");
 
             //Get the value of the ElementalItem
             String ElementalValue = item.getItemMeta().getPersistentDataContainer().get(HiantPlugin.getPlugin(HiantPlugin.class).elementalnamespacekey, org.bukkit.persistence.PersistentDataType.STRING);
