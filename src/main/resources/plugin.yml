@@ -2,5 +2,5 @@ name: HiantPlugin
 version: '${version}'
 main: org.insilicon.hiantplugin.HiantPlugin
 api-version: '1.20'
-depend: [LibertyBans, LuckPerms, PremiumVanish, PlaceholderAPI]
+depend: [LibertyBans, LuckPerms, PremiumVanish, PlaceholderAPI, Skript]
 authors: ["Prorickey", "LukeIThink", "ModdedKid"]
