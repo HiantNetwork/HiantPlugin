@@ -48,6 +48,11 @@ public final class HiantPlugin extends CyberAPI {
         elementalnamespacekey = new NamespacedKey(HiantPlugin.getPlugin(HiantPlugin.class), "ElementalItem");
         mechanicalelytrakey = new NamespacedKey(HiantPlugin.getPlugin(HiantPlugin.class), "MechanicalElytra");
 
+        HiantSkript skript = new HiantSkript();
+        hiantSkriptAddon = skript.getAddonInstance();
+
+        Log.info("Custom hiant skript stuff loaded");
+
         //Register commands / tab completers / Listener
         //this.getCommand("hiantsys").setExecutor(new org.insilicon.hiantsys.commands.hsys_admin());
         //this.getCommand("hiantsys").setTabCompleter(new org.insilicon.hiantsys.commands.hsys_admin());
@@ -91,11 +96,6 @@ public final class HiantPlugin extends CyberAPI {
         world = BukkitAdapter.adapt(getServer().getWorld("box"));
 
         Log.info("FAWE API initialized");
-
-        HiantSkript skript = new HiantSkript();
-        hiantSkriptAddon = skript.getAddonInstance();
-
-        Log.info("Custom hiant skript stuff loaded");
 
         getServer().getPluginManager().registerEvents(new org.insilicon.hiantplugin.systems.ElementalTools(), this);
         getServer().getPluginManager().registerEvents(new org.insilicon.hiantplugin.commands.hsys_admin(), this);

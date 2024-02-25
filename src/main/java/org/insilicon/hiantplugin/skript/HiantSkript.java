@@ -21,7 +21,7 @@ public class HiantSkript {
             }
             Log.info("Loading skript things...");
             addon = Skript.registerAddon(HiantPlugin.getPlugin());
-            addon.loadClasses("org.insilicon.hiantsys.skript", "elements");
+            addon.loadClasses("org.insilicon.hiantplugin.skript", "elements");
 
             new EffClearBox();
             new EffResetCastle();
