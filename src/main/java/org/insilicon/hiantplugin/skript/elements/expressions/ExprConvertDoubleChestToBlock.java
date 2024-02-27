@@ -8,7 +8,6 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import net.cybercake.cyberapi.spigot.chat.Log;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.event.Event;
 
@@ -20,7 +19,7 @@ public class ExprConvertDoubleChestToBlock extends SimpleExpression<Block>  {
         try {
             Skript.registerExpression(ExprConvertDoubleChestToBlock.class, Block.class, ExpressionType.COMBINED, "converted doublechest of %object%");
         } catch(Exception ignored) {
-            Log.error("Failed to load expression ConvertBlockstateToBlock");
+            Log.error("Failed to load expression ConvertDoubleChestToBlock");
         }
     }
 

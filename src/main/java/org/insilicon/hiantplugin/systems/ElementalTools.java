@@ -39,7 +39,7 @@ public class ElementalTools implements Listener {
 
         //System.out.println(HiantPlugin.getPlugin(HiantPlugin.class).elementalnamespacekey);
 
-        if (item.getItemMeta().getPersistentDataContainer().has(HiantPlugin.getPlugin(HiantPlugin.class).elementalnamespacekey, org.bukkit.persistence.PersistentDataType.STRING)) {
+        if (item.getItemMeta() != null && item.getItemMeta().getPersistentDataContainer().has(HiantPlugin.getPlugin(HiantPlugin.class).elementalnamespacekey, org.bukkit.persistence.PersistentDataType.STRING)) {
             //System.out.println("Player killed with ElementalItem");
 
             //Get the value of the ElementalItem
