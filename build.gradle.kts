@@ -32,14 +32,14 @@ dependencies {
     //https://maven.enginehub.org/repo/com/sk89q/worldedit/worldedit-bukkit/7.3.0-SNAPSHOT/
     //compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT'
 
-    compileOnly("com.github.SkriptLang:Skript:2.8.0-pre1")
+    compileOnly("com.github.SkriptLang:Skript:2.9.0")
     compileOnly("com.github.LeonMangler:PremiumVanishAPI:2.9.0-4")
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core")
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit") { isTransitive = false }
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.10")
     compileOnly("com.mojang:authlib:3.17.30")
     compileOnly("net.luckperms:api:5.4")
-    compileOnly("space.arim.libertybans:bans-api:1.1.0-RC1")
+    compileOnly("space.arim.libertybans:bans-api:1.1.0-RC2")
 
 }
 
