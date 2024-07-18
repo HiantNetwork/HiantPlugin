@@ -1,0 +1,17 @@
+name: HiantPlugin
+version: ${version}
+main: org.insilicon.hiantplugin.HiantPlugin
+api-version: '1.20'
+authors: ["Prorickey", "LukeIThink", "ModdedKid"]
+dependencies:
+  server:
+    Skript:
+      load: BEFORE
+    LibertyBans:
+      load: BEFORE
+    LuckPerms:
+      load: BEFORE
+    PremiumVanish:
+      load: BEFORE
+    PlaceholderAPI:
+      load: BEFORE
