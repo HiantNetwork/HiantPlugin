@@ -1,7 +1,5 @@
 package org.insilicon.hiantplugin.commands;
 
-
-
 import net.cybercake.cyberapi.spigot.chat.UChat;
 import net.cybercake.cyberapi.spigot.server.commands.CommandInformation;
 import net.cybercake.cyberapi.spigot.server.commands.SpigotCommand;
@@ -173,7 +171,7 @@ public class hsys_admin extends SpigotCommand implements Listener {
                 ItemStack FireBow = new ItemStack(Material.BOW);
                 ItemMeta FireBowmeta = FireBow.getItemMeta();
                 FireBowmeta.setDisplayName(ChatColor.RED + "Fire Bow");
-                FireBowmeta.addEnchant(Enchantment.ARROW_FIRE, 1, true);
+                FireBowmeta.addEnchant(Enchantment.FLAME, 1, true);
                 FireBow.setItemMeta(FireBowmeta);
 
                 giveinv.setItem(1, FireBow);
@@ -185,7 +183,7 @@ public class hsys_admin extends SpigotCommand implements Listener {
 
                 ItemMeta MechanicalElytrameta = MechanicalElytra.getItemMeta();
                 MechanicalElytrameta.setDisplayName(ChatColor.GRAY +""+ ChatColor.BOLD + "Mechanical Elytra");
-                MechanicalElytrameta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
+                MechanicalElytrameta.addEnchant(Enchantment.INFINITY, 1, true);
                 MechanicalElytrameta.getPersistentDataContainer().set(HiantPlugin.getPlugin(HiantPlugin.class).mechanicalelytrakey, PersistentDataType.STRING, "MechanicalElytra");
 
                 //Lore Array
@@ -282,7 +280,7 @@ public class hsys_admin extends SpigotCommand implements Listener {
                 ItemStack FireBow = new ItemStack(Material.BOW);
                 ItemMeta FireBowmeta = FireBow.getItemMeta();
                 FireBowmeta.setDisplayName(ChatColor.RED + "Fire Bow");
-                FireBowmeta.addEnchant(Enchantment.ARROW_FIRE, 1, true);
+                FireBowmeta.addEnchant(Enchantment.FLAME, 1, true);
 
                 System.out.println(HiantPlugin.getPlugin(HiantPlugin.class).elementalnamespacekey);
 
@@ -302,7 +300,7 @@ public class hsys_admin extends SpigotCommand implements Listener {
 
                 ItemMeta MechanicalElytrameta = MechanicalElytra.getItemMeta();
                 MechanicalElytrameta.setDisplayName(ChatColor.GRAY +""+ ChatColor.BOLD + "Mechanical Elytra");
-                MechanicalElytrameta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
+                MechanicalElytrameta.addEnchant(Enchantment.INFINITY, 1, true);
                 MechanicalElytrameta.getPersistentDataContainer().set(HiantPlugin.getPlugin(HiantPlugin.class).mechanicalelytrakey, PersistentDataType.INTEGER, 35);
 
                 //Lore Array
