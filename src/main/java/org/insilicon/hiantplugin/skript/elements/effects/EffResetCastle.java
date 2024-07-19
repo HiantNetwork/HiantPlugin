@@ -15,7 +15,7 @@ public class EffResetCastle extends Effect {
     static {
         try {
             Skript.registerEffect(EffResetCastle.class, "reset hiant's nether castle");
-        }catch (Exception e) {
+        } catch (Exception e) {
             Log.error("Failed to load effect nether castle");
         }
     }

@@ -33,7 +33,6 @@ dependencies {
     //compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT'
 
     compileOnly("com.github.SkriptLang:Skript:2.9.0")
-    compileOnly("com.github.LeonMangler:PremiumVanishAPI:2.9.0-4")
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core")
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit") { isTransitive = false }
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.10")
@@ -62,7 +61,7 @@ tasks {
         val props = mapOf("version" to version)
         inputs.properties(props)
         filteringCharset = "UTF-8"
-        filesMatching("plugin.yml") {
+        filesMatching("paper-plugin.yml") {
             expand(props)
         }
     }

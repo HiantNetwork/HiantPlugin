@@ -7,11 +7,17 @@ dependencies:
   server:
     Skript:
       load: BEFORE
+      required: true
+      join-classpath: true
     LibertyBans:
       load: BEFORE
+      required: true
+      join-classpath: true
     LuckPerms:
       load: BEFORE
-    PremiumVanish:
-      load: BEFORE
+      required: true
+      join-classpath: true
     PlaceholderAPI:
       load: BEFORE
+      required: true
+      join-classpath: true

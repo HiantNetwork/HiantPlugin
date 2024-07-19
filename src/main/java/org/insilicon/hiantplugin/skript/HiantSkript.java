@@ -7,6 +7,8 @@ import net.cybercake.cyberapi.spigot.chat.Log;
 import org.insilicon.hiantplugin.HiantPlugin;
 import org.insilicon.hiantplugin.skript.elements.effects.EffClearBox;
 import org.insilicon.hiantplugin.skript.elements.effects.EffResetCastle;
+import org.insilicon.hiantplugin.skript.elements.expressions.ExprConvertDoubleChestToBlock;
+import org.insilicon.hiantplugin.skript.elements.expressions.ExprDefaultItemName;
 
 public class HiantSkript {
 
@@ -25,11 +27,13 @@ public class HiantSkript {
 
             new EffClearBox();
             new EffResetCastle();
+            new ExprConvertDoubleChestToBlock();
+            new ExprDefaultItemName();
 
             Log.info("Loaded all skript things");
         } catch (Exception e) {
+            Log.error(e.getMessage());
             Log.info("Failed to load skript");
-//            BetterStackTraces.print(e);
         }
     }
 

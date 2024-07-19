@@ -15,7 +15,7 @@ public class EffClearBox extends Effect {
     static {
         try {
             Skript.registerEffect(EffClearBox.class, "clear hiant box in %string%");
-        }catch (Exception e) {
+        } catch (Exception e) {
             Log.error("Failed to load effect clear box");
         }
     }

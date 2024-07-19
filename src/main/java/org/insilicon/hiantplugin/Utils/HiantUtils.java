@@ -1,6 +1,5 @@
 package org.insilicon.hiantplugin.Utils;
 
-import de.myzelyam.api.vanish.VanishAPI;
 import net.cybercake.cyberapi.spigot.CyberAPI;
 import net.cybercake.cyberapi.spigot.chat.Log;
 import net.cybercake.cyberapi.spigot.chat.UChat;
@@ -194,10 +193,6 @@ public class HiantUtils {
 
         if (filter == null || filter.test(CyberAPI.getInstance().getServer().getConsoleSender()))
             Log.info(message);
-    }
-
-    public static boolean checkPlayerVanished(Player player) {
-        return VanishAPI.isInvisible(player) || VanishAPI.isInvisibleOffline(player.getUniqueId());
     }
 
     public static String[] getUChatLines(String... lines) {

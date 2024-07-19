@@ -18,7 +18,7 @@ public class ExprDefaultItemName extends SimpleExpression<String> {
     static {
         try {
             Skript.registerExpression(ExprDefaultItemName.class, String.class, ExpressionType.COMBINED, "[the] default item name of %itemstacks%");
-        }catch(Exception ignored) {
+        } catch(Exception ignored) {
             Log.error("Failed to load expression DefaultItemName");
         }
     }
