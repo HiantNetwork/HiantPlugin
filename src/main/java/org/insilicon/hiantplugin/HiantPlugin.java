@@ -19,6 +19,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.codehaus.plexus.util.FileUtils;
 import org.insilicon.hiantplugin.commands.main.CommandManager;
 import org.insilicon.hiantplugin.configuration.RecipesConfig;
+import org.insilicon.hiantplugin.schedules.ScheduledBroadcasts;
 import org.insilicon.hiantplugin.skript.HiantSkript;
 import org.insilicon.hiantplugin.systems.Regeneration;
 
@@ -124,6 +125,8 @@ public final class HiantPlugin extends CyberAPI {
             Log.error("Error loading recipes config");
             BetterStackTraces.print(e);
         }
+
+        ScheduledBroadcasts.startBroadcasts(this);
 
         Log.info("&aLoaded " + getDescription().getName() + " [v" + getDescription().getVersion() + "], created by " + String.join(" ", getDescription().getAuthors()) + " in " + (System.currentTimeMillis() - mss) + "ms! ");
     }
