@@ -4,6 +4,7 @@ import ch.njol.skript.SkriptAddon;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.world.World;
 import fr.mrmicky.fastinv.FastInvManager;
+import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import net.cybercake.cyberapi.common.builders.settings.FeatureSupport;
 import net.cybercake.cyberapi.common.builders.settings.Settings;
 import net.cybercake.cyberapi.spigot.CyberAPI;
@@ -15,11 +16,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.codehaus.plexus.util.FileUtils;
 import org.insilicon.hiantplugin.commands.main.CommandManager;
 import org.insilicon.hiantplugin.configuration.RecipesConfig;
-import org.insilicon.hiantplugin.schedules.ScheduledBroadcasts;
+import xyz.prorickey.hiantplugin.commands.LinkCommand;
+import xyz.prorickey.hiantplugin.commands.UnlinkCommand;
+import xyz.prorickey.hiantplugin.database.Database;
+import xyz.prorickey.hiantplugin.discord.HiantDiscord;
+import xyz.prorickey.hiantplugin.events.PlayerJoin;
+import xyz.prorickey.hiantplugin.schedules.ScheduledBroadcasts;
 import org.insilicon.hiantplugin.skript.HiantSkript;
 import org.insilicon.hiantplugin.systems.Regeneration;
 
@@ -38,9 +45,11 @@ public final class HiantPlugin extends CyberAPI {
     public World world;
     private static SkriptAddon hiantSkriptAddon;
     private static LuckPerms luckPermsAPI;
-
+    private static Database database;
+    private static HiantDiscord discord;
 
     @Override
+    @SuppressWarnings("UnstableApiUsage")
     public void onEnable() {
         // Plugin startup logic
         long mss = System.currentTimeMillis();
@@ -92,6 +101,17 @@ public final class HiantPlugin extends CyberAPI {
         reloadConfig();
         Log.info("Main config(s) loaded");
 
+        // Proickey - initialize database and discord client after config is loaded
+        database = new Database();
+        discord = new HiantDiscord();
+
+        // Prorickey - register commands
+        LifecycleEventManager<Plugin> manager = this.getLifecycleManager();
+        LinkCommand.register(manager);
+        UnlinkCommand.register(manager);
+        
+        // Prorickey - register events
+        getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
 
         //Init FAWE world edit api
         world = BukkitAdapter.adapt(getServer().getWorld("box"));
@@ -209,15 +229,7 @@ public final class HiantPlugin extends CyberAPI {
 
     }
 
-
-
-
-
-
-
-
-
-
-
+    public static Database getDatabase() { return database; }
+    public static HiantDiscord getDiscord() { return discord; }
 
 }

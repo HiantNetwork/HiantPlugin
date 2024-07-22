@@ -1,4 +1,4 @@
-package org.insilicon.hiantplugin.schedules;
+package xyz.prorickey.hiantplugin.schedules;
 
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;

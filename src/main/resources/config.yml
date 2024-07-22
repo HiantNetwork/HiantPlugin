@@ -14,5 +14,13 @@ chat:
   suffixLengthIncludeColors: false
   maxSuffixLength: 16 # -1 to disable
 
+database:
+  host: localhost
+  port: 3306
+  database: database
+  username: root
+  password: password
+
 discordBot:
   token:
+  guildId: "1186664197644353576"

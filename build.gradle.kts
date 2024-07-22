@@ -27,7 +27,8 @@ dependencies {
     implementation("net.cybercake.cyberapi:common:185")
     implementation(platform("com.intellectualsites.bom:bom-newest:1.47")) // Ref: https://github.com/IntellectualSites/bom
     implementation("fr.mrmicky:FastInv:3.0.4")
-    implementation("net.dv8tion:JDA:5.0.0-beta.19")
+    implementation("net.dv8tion:JDA:5.0.1")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.4.1")
 
     //https://maven.enginehub.org/repo/com/sk89q/worldedit/worldedit-bukkit/7.3.0-SNAPSHOT/
     //compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT'
@@ -51,6 +52,8 @@ java {
 tasks {
     shadowJar {
         relocate("fr.mrmickey.fastinv", "org.insilicon.fastinv")
+        relocate("org.mariadb.jdbc", "org.insilicon.mariadb.jdbc")
+        relocate("com.github.benmanes.caffeine", "xyz.prorickey.caffeine")
 
         destinationDirectory.set(file("${rootDir}/output"))
         archiveClassifier.set("")
