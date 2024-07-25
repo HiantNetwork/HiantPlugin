@@ -1,17 +1,20 @@
 plugins {
-    id("java")
+    `java-library`
+    id("io.papermc.paperweight.userdev") version "1.7.1"
     id("io.github.goooler.shadow") version "8.1.8" // Change back once goooler's PR goes through https://github.com/johnrengelman/shadow/pull/876
 }
 
 group = "org.insilicon"
 version = "1.0.0"
 
+paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
+
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/") { name = "papermc" }
     maven("https://oss.sonatype.org/content/groups/public/") { name = "sonatype" }
     maven("https://libraries.minecraft.net/") { name = "minecraft-repo" }
-    maven("https://repo.skriptlang.org/releases") { name = "skript" }
+    //maven("https://repo.skriptlang.org/releases") { name = "skript" }
     maven("https://maven.enginehub.org/repo/") { name = "enginehub" }
     maven("https://repo.cybercake.net/repository/maven-public/") { name = "cybercake" }
     maven("https://mvn-repo.arim.space/lesser-gpl3/") { name = "arim-mvn-lgpl3" }
@@ -22,8 +25,6 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
-
     implementation("net.cybercake.cyberapi:spigot:185")
     implementation("net.cybercake.cyberapi:common:185")
     implementation(platform("com.intellectualsites.bom:bom-newest:1.47")) // Ref: https://github.com/IntellectualSites/bom
@@ -43,6 +44,7 @@ dependencies {
     compileOnly("space.arim.libertybans:bans-api:1.1.0-RC2")
     compileOnly("us.crazycrew.crazycrates:api:0.7")
 
+    paperweight.paperDevBundle("1.21-R0.1-SNAPSHOT")
 }
 
 java {
@@ -61,6 +63,10 @@ tasks {
         destinationDirectory.set(file("${rootDir}/output"))
         archiveClassifier.set("")
         archiveBaseName.set("HiantPlugin")
+    }
+
+    compileJava {
+        options.release = 21
     }
 
     processResources {
