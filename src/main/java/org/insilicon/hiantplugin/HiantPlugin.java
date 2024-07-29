@@ -21,6 +21,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.codehaus.plexus.util.FileUtils;
 import org.insilicon.hiantplugin.commands.main.CommandManager;
 import org.insilicon.hiantplugin.configuration.RecipesConfig;
+import xyz.prorickey.hiantplugin.LibertyBansHook;
 import xyz.prorickey.hiantplugin.commands.LinkCommand;
 import xyz.prorickey.hiantplugin.commands.UnlinkCommand;
 import xyz.prorickey.hiantplugin.database.Database;
@@ -105,6 +106,9 @@ public final class HiantPlugin extends CyberAPI {
         // Proickey - initialize database and discord client after config is loaded
         database = new Database();
         discord = new HiantDiscord();
+
+        // Prorickey - register liberty bans hook
+        LibertyBansHook.create();
 
         // Prorickey - register commands
         LifecycleEventManager<Plugin> manager = this.getLifecycleManager();

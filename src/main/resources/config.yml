@@ -24,3 +24,4 @@ database:
 discordBot:
   token:
   guildId: "1186664197644353576"
+  modLogsId: "1192540769328832562"
