@@ -24,6 +24,11 @@ public class LibertyBansHook {
         listenToPunishEvent();
     }
 
+    public static LibertyBans getLiberyBans() {
+        Omnibus omnibus = OmnibusProvider.getOmnibus();
+        return omnibus.getRegistry().getProvider(LibertyBans.class).orElseThrow();
+    }
+
     public static LibertyBansHook create() {
         Omnibus omnibus = OmnibusProvider.getOmnibus();
         LibertyBans libertyBans = omnibus.getRegistry().getProvider(LibertyBans.class).orElseThrow();
