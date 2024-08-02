@@ -17,6 +17,7 @@ repositories {
     maven("https://mvn-repo.arim.space/lesser-gpl3/") { name = "arim-mvn-lgpl3" }
     maven("https://mvn-repo.arim.space/gpl3/") { name = "arim-mvn-gpl3" }
     maven("https://mvn-repo.arim.space/affero-gpl3/") { name = "arim-mvn-agpl3" }
+    maven("https://repo.crazycrew.us/releases") { name = "crazycrew" }
     maven("https://jitpack.io") { name = "jitpack" }
 }
 
@@ -40,6 +41,7 @@ dependencies {
     compileOnly("com.mojang:authlib:3.17.30")
     compileOnly("net.luckperms:api:5.4")
     compileOnly("space.arim.libertybans:bans-api:1.1.0-RC2")
+    compileOnly("us.crazycrew.crazycrates:api:0.7")
 
 }
 
@@ -54,6 +56,7 @@ tasks {
         relocate("fr.mrmickey.fastinv", "org.insilicon.fastinv")
         relocate("org.mariadb.jdbc", "org.insilicon.mariadb.jdbc")
         relocate("com.github.benmanes.caffeine", "xyz.prorickey.caffeine")
+        relocate("net.dv8tion", "xyz.prorickey.dv8tion")
 
         destinationDirectory.set(file("${rootDir}/output"))
         archiveClassifier.set("")

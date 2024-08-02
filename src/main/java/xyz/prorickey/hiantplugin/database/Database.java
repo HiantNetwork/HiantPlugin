@@ -9,9 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Database {
 
@@ -28,7 +26,7 @@ public class Database {
                     HiantPlugin.getConf().getString("database.username"),
                     HiantPlugin.getConf().getString("database.password"));
 
-            PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS discord (discord_id BIGINT PRIMARY KEY, minecraft_uuid VARCHAR(255))");
+            PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS discord (minecraft_uuid VARCHAR(255) PRIMARY KEY, discord_id BIGINT)");
             preparedStatement.execute();
         } catch (Exception e) {
             BetterStackTraces.print(e);
@@ -47,8 +45,8 @@ public class Database {
                 ResultSet set = preparedStatement.executeQuery();
 
                 if (set.next()) {
-                    LinkedAccount linkedAccount = new LinkedAccount(preparedStatement.getResultSet().getLong("discord_id"), uuid.toString());
-                    cachedLinkedAccounts.put(uuid, linkedAccount);
+                    if(set.getLong("discord_id") == 0) linkedBefore.add(uuid);
+                    else cachedLinkedAccounts.put(uuid, new LinkedAccount(set.getLong("discord_id"), uuid.toString()));
                 }
             } catch (Exception e) {
                 BetterStackTraces.print(e);
@@ -56,6 +54,7 @@ public class Database {
         });
     }
 
+    private final List<UUID> linkedBefore = new ArrayList<>();
     private final Map<UUID, LinkedAccount> cachedLinkedAccounts = new HashMap<>();
 
     /**
@@ -74,6 +73,10 @@ public class Database {
 
         public Long getDiscordId() { return discordId; }
         public String getMinecraftUUID() { return minecraftUUID; }
+    }
+
+    public Boolean linkedBefore(UUID uuid) {
+        return linkedBefore.contains(uuid);
     }
 
     /**
@@ -107,10 +110,18 @@ public class Database {
         cachedLinkedAccounts.put(UUID.fromString(minecraftUUID), new LinkedAccount(discordId, minecraftUUID));
         Bukkit.getScheduler().runTaskAsynchronously(HiantPlugin.getPlugin(), () -> {
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO discord (discord_id, minecraft_uuid) VALUES (?, ?)");
-                preparedStatement.setLong(1, discordId);
-                preparedStatement.setString(2, minecraftUUID);
-                preparedStatement.execute();
+                if(linkedBefore.contains(UUID.fromString(minecraftUUID))) {
+                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE discord SET discord_id = ? WHERE minecraft_uuid = ?");
+                    preparedStatement.setLong(1, discordId);
+                    preparedStatement.setString(2, minecraftUUID);
+                    preparedStatement.execute();
+                    linkedBefore.remove(UUID.fromString(minecraftUUID));
+                } else {
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO discord (discord_id, minecraft_uuid) VALUES (?, ?)");
+                    preparedStatement.setLong(1, discordId);
+                    preparedStatement.setString(2, minecraftUUID);
+                    preparedStatement.execute();
+                }
             } catch (Exception e) {
                 BetterStackTraces.print(e);
             }
@@ -122,10 +133,12 @@ public class Database {
      * @param discordId The Discord account id
      */
     public void unlinkAccount(Long discordId) {
+        LinkedAccount la = cachedLinkedAccounts.entrySet().stream().filter(entry -> entry.getValue().getDiscordId().equals(discordId)).findFirst().orElse(null).getValue();
         cachedLinkedAccounts.entrySet().removeIf(entry -> entry.getValue().getDiscordId().equals(discordId));
+        linkedBefore.add(UUID.fromString(la.getMinecraftUUID()));
         Bukkit.getScheduler().runTaskAsynchronously(HiantPlugin.getPlugin(), () -> {
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM discord WHERE discord_id = ?");
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE discord SET discord_id = NULL WHERE discord_id = ?");
                 preparedStatement.setLong(1, discordId);
                 preparedStatement.execute();
             } catch (Exception e) {
@@ -140,9 +153,10 @@ public class Database {
      */
     public void unlinkAccount(UUID minecraftUUID) {
         cachedLinkedAccounts.remove(minecraftUUID);
+        linkedBefore.add(minecraftUUID);
         Bukkit.getScheduler().runTaskAsynchronously(HiantPlugin.getPlugin(), () -> {
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM discord WHERE minecraft_uuid = ?");
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE discord SET discord_id = NULL WHERE minecraft_uuid = ?");
                 preparedStatement.setString(1, minecraftUUID.toString());
                 preparedStatement.execute();
             } catch (Exception e) {

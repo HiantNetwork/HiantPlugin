@@ -1,5 +1,6 @@
 package xyz.prorickey.hiantplugin.discord.commands;
 
+import com.sk89q.worldedit.command.util.annotation.Link;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -29,6 +30,7 @@ public class LinkSlashCommand extends ListenerAdapter {
                     LinkCommand.LinkCode linkCode = LinkCommand.codes.get(code);
                     LinkCommand.minecraftLinking.remove(linkCode.getUuid());
                     LinkCommand.codes.remove(code);
+                    if(!HiantPlugin.getDatabase().linkedBefore(linkCode.getUuid())) LinkCommand.giveKey(linkCode.getUuid());
                     HiantPlugin.getDatabase().linkAccount(event.getUser().getIdLong(), linkCode.getUuid().toString());
                     LinkCommand.recentlyLinked.put(linkCode.getUuid(), event.getUser().getName());
                     event.reply("Your account has been linked successfully!")

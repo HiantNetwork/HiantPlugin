@@ -14,6 +14,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.insilicon.hiantplugin.HiantPlugin;
+import us.crazycrew.crazycrates.CratesProvider;
+import us.crazycrew.crazycrates.api.enums.types.KeyType;
+import us.crazycrew.crazycrates.api.users.UserManager;
 
 import javax.annotation.Nullable;
 import java.security.SecureRandom;
@@ -80,6 +83,7 @@ public class LinkCommand {
                 discordLinking.remove(linkCode.discordId);
                 codes.remove(code);
                 linkCode.setUuid(player.getUniqueId());
+                if(!HiantPlugin.getDatabase().linkedBefore(player.getUniqueId())) LinkCommand.giveKey(player.getUniqueId());
                 HiantPlugin.getDatabase().linkAccount(linkCode.discordId, player.getUniqueId().toString());
                 player.sendMessage(MiniMessage.miniMessage().deserialize("\n<green>Your account has been linked successfully!\n"));
                 player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.MASTER, 1.0f, 1.0f));
@@ -112,6 +116,13 @@ public class LinkCommand {
             );
             player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.MASTER, 1.0f, 1.0f));
         }
+    }
+
+    public static void giveKey(UUID uuid) {
+        HiantPlugin.getPlugin().getServer().getScheduler().runTask(HiantPlugin.getPlugin(), () -> {
+            UserManager userManager = CratesProvider.get().getUserManager();
+            userManager.addKeys(uuid, "EmeraldCrate", KeyType.virtual_key, 1);
+        });
     }
 
     public static String generateCode() {

@@ -21,3 +21,7 @@ dependencies:
       load: BEFORE
       required: true
       join-classpath: true
+    CrazyCrates:
+      load: BEFORE
+      required: true
+      join-classpath: true

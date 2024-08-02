@@ -32,6 +32,7 @@ import org.insilicon.hiantplugin.systems.Regeneration;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 
 @SuppressWarnings({"unused", "deprecation"})
 public final class HiantPlugin extends CyberAPI {
@@ -159,6 +160,15 @@ public final class HiantPlugin extends CyberAPI {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        discord.getJDA().shutdown();
+        try {
+            if(!discord.getJDA().awaitShutdown(Duration.ofSeconds(10))) {
+                discord.getJDA().shutdownNow();
+                discord.getJDA().awaitShutdown();
+            }
+        } catch (InterruptedException e) {
+            getLogger().severe("Discord bot failed to shutdown: " + e.getMessage());
+        }
     }
 
     public static HiantPlugin getPlugin() {
