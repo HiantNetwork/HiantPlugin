@@ -21,7 +21,9 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.codehaus.plexus.util.FileUtils;
 import org.insilicon.hiantplugin.commands.main.CommandManager;
 import org.insilicon.hiantplugin.configuration.RecipesConfig;
+import xyz.prorickey.hiantplugin.EnderChestHandler;
 import xyz.prorickey.hiantplugin.LibertyBansHook;
+import xyz.prorickey.hiantplugin.commands.EnderChest;
 import xyz.prorickey.hiantplugin.commands.LinkCommand;
 import xyz.prorickey.hiantplugin.commands.UnlinkCommand;
 import xyz.prorickey.hiantplugin.database.Database;
@@ -114,9 +116,11 @@ public final class HiantPlugin extends CyberAPI {
         LifecycleEventManager<Plugin> manager = this.getLifecycleManager();
         LinkCommand.register(manager);
         UnlinkCommand.register(manager);
+        EnderChest.register(manager);
         
         // Prorickey - register events
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
+        getServer().getPluginManager().registerEvents(new EnderChestHandler(), this);
 
         //Init FAWE world edit api
         world = BukkitAdapter.adapt(getServer().getWorld("box"));

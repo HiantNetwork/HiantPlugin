@@ -2,6 +2,9 @@ package xyz.prorickey.hiantplugin.database;
 
 import net.cybercake.cyberapi.spigot.basic.BetterStackTraces;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.insilicon.hiantplugin.HiantPlugin;
 
 import javax.annotation.Nullable;
@@ -26,8 +29,19 @@ public class Database {
                     HiantPlugin.getConf().getString("database.username"),
                     HiantPlugin.getConf().getString("database.password"));
 
-            PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS discord (minecraft_uuid VARCHAR(255) PRIMARY KEY, discord_id BIGINT)");
-            preparedStatement.execute();
+            PreparedStatement createDiscord = connection.prepareStatement("CREATE TABLE IF NOT EXISTS discord (" +
+                    "minecraft_uuid VARCHAR(255) PRIMARY KEY, " +
+                    "discord_id BIGINT)");
+
+            createDiscord.execute();
+
+            PreparedStatement createEnderChest = connection.prepareStatement("CREATE TABLE IF NOT EXISTS ender_chests (" +
+                    "uuid VARCHAR(255), " +
+                    "slot TINYINT, " +
+                    "item BLOB, " +
+                    "PRIMARY KEY (uuid, slot))");
+
+            createEnderChest.execute();
         } catch (Exception e) {
             BetterStackTraces.print(e);
         }
@@ -40,14 +54,23 @@ public class Database {
     public void cacheData(UUID uuid) {
         Bukkit.getScheduler().runTaskAsynchronously(HiantPlugin.getPlugin(), () -> {
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM discord WHERE minecraft_uuid = ?");
-                preparedStatement.setString(1, uuid.toString());
-                ResultSet set = preparedStatement.executeQuery();
+                PreparedStatement linkStmt = connection.prepareStatement("SELECT * FROM discord WHERE minecraft_uuid = ?");
+                linkStmt.setString(1, uuid.toString());
+                ResultSet set = linkStmt.executeQuery();
 
                 if (set.next()) {
                     if(set.getLong("discord_id") == 0) linkedBefore.add(uuid);
                     else cachedLinkedAccounts.put(uuid, new LinkedAccount(set.getLong("discord_id"), uuid.toString()));
                 }
+
+                PreparedStatement enderChestStmt = connection.prepareStatement("SELECT * FROM ender_chests WHERE uuid = ?");
+                enderChestStmt.setString(1, uuid.toString());
+                ResultSet enderChestSet = enderChestStmt.executeQuery();
+                Map<Integer, ItemStack> enderChest = new HashMap<>();
+                while (enderChestSet.next())
+                    enderChest.put(enderChestSet.getInt("slot"), enderChestSet.getBytes("item") == null ? new ItemStack(Material.AIR) : ItemStack.deserializeBytes(enderChestSet.getBytes("item")));
+                if(enderChest.isEmpty()) for(int i = 0; i < 27; i++) enderChest.put(i, new ItemStack(Material.AIR));
+                cachedEnderChests.put(uuid, enderChest);
             } catch (Exception e) {
                 BetterStackTraces.print(e);
             }
@@ -56,6 +79,79 @@ public class Database {
 
     private final List<UUID> linkedBefore = new ArrayList<>();
     private final Map<UUID, LinkedAccount> cachedLinkedAccounts = new HashMap<>();
+    private final Map<UUID, Map<Integer, ItemStack>> cachedEnderChests = new HashMap<>();
+
+    /**
+     * Loads the ender chest of a player
+     * @param uuid The UUID of the player
+     * @return The ender chest of the player
+     */
+    public Map<Integer, ItemStack> getCachedEnderChest(UUID uuid) {
+        return cachedEnderChests.get(uuid);
+    }
+
+    /**
+     * Upgrades the ender chest of a player
+     * @param uuid The UUID of the player
+     */
+    public void upgradeEnderChest(UUID uuid) { // TODO: Probably some of the worst code I've written in my life... will need to update
+        Bukkit.getScheduler().runTaskAsynchronously(HiantPlugin.getPlugin(), () -> {
+            try {
+                PreparedStatement enderChestStmt = connection.prepareStatement("SELECT * FROM ender_chests WHERE uuid = ?");
+                enderChestStmt.setString(1, uuid.toString());
+                ResultSet enderChestSet = enderChestStmt.executeQuery();
+                Map<Integer, ItemStack> enderChest = new HashMap<>();
+                while (enderChestSet.next())
+                    enderChest.put(enderChestSet.getInt("slot"), ItemStack.deserializeBytes(enderChestSet.getBytes("item")));
+                for(int i = 0; i < 54; i++) if(enderChest.get(i) == null) enderChest.put(i, new ItemStack(Material.AIR));
+
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ender_chests (uuid, slot, item) VALUES (?, ?, ?) " +
+                        "ON DUPLICATE KEY UPDATE item = VALUES(item)");
+
+                for (Map.Entry<Integer, ItemStack> entry : enderChest.entrySet()) {
+                    preparedStatement.setString(1, uuid.toString());
+                    preparedStatement.setInt(2, entry.getKey());
+                    preparedStatement.setBytes(3, entry.getValue().getType() == Material.AIR ? null : entry.getValue().serializeAsBytes());
+                    preparedStatement.addBatch();
+                }
+
+                preparedStatement.executeBatch();
+            } catch (Exception e) {
+                BetterStackTraces.print(e);
+            }
+        });
+    }
+
+    /**
+     * Saves the ender chest into the database of the player
+     * @param uuid The UUID of the player
+     * @param inventory The inventory to load the ender chest into
+     */
+    public void saveEnderChest(UUID uuid, Inventory inventory) {
+        Map<Integer, ItemStack> items = new HashMap<>();
+        for (int i = 0; i < inventory.getSize(); i++) {
+            ItemStack item = inventory.getItem(i);
+            if (item != null) items.put(i, item);
+        }
+        cachedEnderChests.put(uuid, items);
+        Bukkit.getScheduler().runTaskAsynchronously(HiantPlugin.getPlugin(), () -> {
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ender_chests (uuid, slot, item) VALUES (?, ?, ?) " +
+                        "ON DUPLICATE KEY UPDATE item = VALUES(item)");
+
+                for (Map.Entry<Integer, ItemStack> entry : items.entrySet()) {
+                    preparedStatement.setString(1, uuid.toString());
+                    preparedStatement.setInt(2, entry.getKey());
+                    preparedStatement.setBytes(3, entry.getValue().serializeAsBytes());
+                    preparedStatement.addBatch();
+                }
+
+                preparedStatement.executeBatch();
+            } catch (Exception e) {
+                BetterStackTraces.print(e);
+            }
+        });
+    }
 
     /**
      * Represents a linked account
