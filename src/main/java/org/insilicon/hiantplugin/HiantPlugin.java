@@ -28,6 +28,7 @@ import xyz.prorickey.hiantplugin.commands.LinkCommand;
 import xyz.prorickey.hiantplugin.commands.UnlinkCommand;
 import xyz.prorickey.hiantplugin.database.Database;
 import xyz.prorickey.hiantplugin.discord.HiantDiscord;
+import xyz.prorickey.hiantplugin.events.DeathEvent;
 import xyz.prorickey.hiantplugin.events.PlayerJoin;
 import xyz.prorickey.hiantplugin.schedules.ScheduledBroadcasts;
 import org.insilicon.hiantplugin.skript.HiantSkript;
@@ -121,6 +122,7 @@ public final class HiantPlugin extends CyberAPI {
         // Prorickey - register events
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new EnderChestHandler(), this);
+        getServer().getPluginManager().registerEvents(new DeathEvent(), this);
 
         //Init FAWE world edit api
         world = BukkitAdapter.adapt(getServer().getWorld("box"));
