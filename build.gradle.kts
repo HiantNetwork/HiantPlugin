@@ -14,7 +14,7 @@ repositories {
     maven("https://repo.papermc.io/repository/maven-public/") { name = "papermc" }
     maven("https://oss.sonatype.org/content/groups/public/") { name = "sonatype" }
     maven("https://libraries.minecraft.net/") { name = "minecraft-repo" }
-    //maven("https://repo.skriptlang.org/releases") { name = "skript" }
+    maven("https://repo.skriptlang.org/releases") { name = "skript" }
     maven("https://maven.enginehub.org/repo/") { name = "enginehub" }
     maven("https://repo.cybercake.net/repository/maven-public/") { name = "cybercake" }
     maven("https://mvn-repo.arim.space/lesser-gpl3/") { name = "arim-mvn-lgpl3" }
@@ -31,9 +31,6 @@ dependencies {
     implementation("fr.mrmicky:FastInv:3.0.4")
     implementation("net.dv8tion:JDA:5.0.1")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.4.1")
-
-    //https://maven.enginehub.org/repo/com/sk89q/worldedit/worldedit-bukkit/7.3.0-SNAPSHOT/
-    //compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT'
 
     compileOnly("com.github.SkriptLang:Skript:2.9.0")
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core")
