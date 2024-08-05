@@ -77,6 +77,15 @@ public class Database {
         });
     }
 
+    /**
+     * Uncaches the data of a player
+     * @param uuid The UUID of the player
+     */
+    public void unCacheData(UUID uuid) {
+        cachedLinkedAccounts.remove(uuid);
+        cachedEnderChests.remove(uuid);
+    }
+
     private final List<UUID> linkedBefore = new ArrayList<>();
     private final Map<UUID, LinkedAccount> cachedLinkedAccounts = new HashMap<>();
     private final Map<UUID, Map<Integer, ItemStack>> cachedEnderChests = new HashMap<>();

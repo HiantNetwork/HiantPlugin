@@ -62,11 +62,12 @@ public class EnderChestHandler implements Listener {
     public static Inventory getPlayerEnderChest(HumanEntity player) {
         if(!enderChests.containsKey(player.getUniqueId())) {
             Map<Integer, ItemStack> enderChestItems = HiantPlugin.getDatabase().getCachedEnderChest(player.getUniqueId());
-            int rows = enderChestItems.size() / 9;
+            double rows = enderChestItems.size() / 9.0;
+            if(rows % 1 != 0) rows = 3;
 
             String title = "<gradient:#2ba8ed:#5bb0df><b>Ender Chest</b>";
             if(rows < 6) title += " <yellow>(/buy)";
-            Inventory ec = Bukkit.createInventory(new HiantEnderChestHolder(), rows*9, MiniMessage.miniMessage().deserialize(title));
+            Inventory ec = Bukkit.createInventory(new HiantEnderChestHolder(), (int) rows*9, MiniMessage.miniMessage().deserialize(title));
             enderChestItems.forEach(ec::setItem);
             enderChests.put(player.getUniqueId(), ec);
         }
